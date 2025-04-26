@@ -256,6 +256,32 @@ const components: any = (theme: Theme) => {
         },
       },
     },
+    MuiCardMedia: {
+      styleOverrides: {
+        root: {
+          display: 'flex !important',
+          height: '500px !important',
+          alignItems: 'center !important',
+          justifyContent: 'center !important',
+          maxHeight: 'none !important',
+          '& img': {
+            maxWidth: '100% !important',
+            maxHeight: '100% !important',
+            width: 'auto !important',
+            height: 'auto !important',
+            objectFit: 'contain !important',
+          },
+        },
+        img: {
+          display: 'flex !important',
+          height: '500px !important',
+          alignItems: 'center !important',
+          justifyContent: 'center !important',
+          maxHeight: 'none !important',
+          objectFit: 'contain !important',
+        },
+      },
+    },
     MuiTableCell: {
       styleOverrides: {
         root: {

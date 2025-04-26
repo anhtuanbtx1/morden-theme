@@ -4,11 +4,9 @@ import { useDispatch } from 'src/store/Store';
 import {
   CardContent,
   Stack,
-  Avatar,
   Typography,
   Chip,
   Grid,
-  Tooltip,
   Box,
   alpha,
   styled,
@@ -18,24 +16,37 @@ import { IconEye, IconMessage2, IconPoint } from '@tabler/icons';
 import { format } from 'date-fns';
 import { fetchBlogPost } from 'src/store/apps/blog/BlogSlice';
 import BlankCard from '../../shared/BlankCard';
+import CustomCardMedia from '../../shared/CustomCardMedia';
 import { BlogPostType } from 'src/types/apps/blog';
+import { getCategoryColorScheme } from 'src/types/apps/blog/CategoryEnum';
 
 const CoverImgStyle = styled(CardContent)({
   position: 'absolute',
   top: '0',
   left: '0',
-  zIndex: 1,
+  zIndex: 2,
   width: '100%',
   height: '100%',
   color: 'white',
 });
+
 const CoverBox = styled(Box)({
   top: 0,
   content: "''",
   width: '100%',
   height: '100%',
   position: 'absolute',
+  zIndex: 1,
 });
+
+const ImageContainer = styled(Box)({
+  position: 'relative',
+  width: '100%',
+  height: '100%',
+  overflow: 'hidden',
+});
+
+// Removed StyledImg as we'll use CustomCardMedia instead
 
 interface Btype {
   post: BlogPostType;
@@ -44,7 +55,7 @@ interface Btype {
 
 const BlogFeaturedCard = ({ post, index }: Btype) => {
   const dispatch = useDispatch();
-  const { coverImg, title, view, comments, category, author, createdAt }: any = post;
+  const { coverImg, title, view, comments, category, createdAt }: any = post;
   const linkTo = title
     .toLowerCase()
     .replace(/ /g, '-')
@@ -53,10 +64,13 @@ const BlogFeaturedCard = ({ post, index }: Btype) => {
 
   const CoverImgBg = styled(BlankCard)({
     p: 0,
-    height: '400px',
+    height: 'auto',
+    minHeight: '300px',
+    maxHeight: mainPost ? '600px' : '400px',
     position: 'relative',
-    background: `url(${coverImg}) no-repeat center`,
-    backgroundSize: 'cover',
+    aspectRatio: '16/9',
+    width: '100%',
+    overflow: 'hidden',
   });
 
   // skeleton
@@ -66,7 +80,7 @@ const BlogFeaturedCard = ({ post, index }: Btype) => {
     const timer = setTimeout(() => {
       setLoading(false);
     }, 700);
-    
+
     return () => clearTimeout(timer);
   }, []);
 
@@ -94,16 +108,20 @@ const BlogFeaturedCard = ({ post, index }: Btype) => {
             </>
           ) : (
             <CoverImgBg className="hoverCard">
-              <>
-                <Typography
-                  component={Link}
+              <ImageContainer>
+                <Link
                   to={`/apps/blog/detail/${linkTo}`}
                   onClick={() => dispatch(fetchBlogPost(linkTo))}
+                  style={{ display: 'block', width: '100%', height: '100%' }}
                 >
+                  <CustomCardMedia
+                    src={coverImg}
+                    alt={title || "Featured blog image"}
+                  />
                   <CoverBox
                     sx={{ backgroundColor: (theme) => alpha(theme.palette.grey[900], 0.6) }}
                   />
-                </Typography>
+                </Link>
                 <CoverImgStyle>
                   <Box
                     height={'100%'}
@@ -113,30 +131,41 @@ const BlogFeaturedCard = ({ post, index }: Btype) => {
                   >
                     <Box>
                       <Stack direction="row">
-                        <Tooltip title={author?.name} placement="top">
-                          <Avatar aria-label="recipe" src={author?.avatar}></Avatar>
-                        </Tooltip>
                         <Chip
                           sx={{ marginLeft: 'auto' }}
-                          label={category}
+                          label="2 min Read"
                           size="small"
-                          color="primary"
                         ></Chip>
                       </Stack>
                     </Box>
                     <Box>
-                      <Box my={3}>
+                      <Box my={3} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                         <Typography
                           gutterBottom
                           variant="h3"
                           color="inherit"
-                          sx={{ textDecoration: 'none' }}
+                          sx={{
+                            textDecoration: 'none',
+                            textAlign: 'center',
+                            width: '100%'
+                          }}
                           component={Link}
                           to={`/apps/blog/detail/${linkTo}`}
                           onClick={() => dispatch(fetchBlogPost(linkTo))}
                         >
                           {title}
                         </Typography>
+                        <Stack direction="row" justifyContent="center" mt={1} mb={2}>
+                          <Chip
+                            label={category}
+                            size="small"
+                            sx={{
+                              backgroundColor: getCategoryColorScheme(category).backgroundColor,
+                              color: getCategoryColorScheme(category).textColor,
+                              fontWeight: 500
+                            }}
+                          />
+                        </Stack>
                       </Box>
                       <Stack direction="row" gap={3} alignItems="center">
                         <Stack direction="row" gap={1} alignItems="center">
@@ -154,7 +183,7 @@ const BlogFeaturedCard = ({ post, index }: Btype) => {
                     </Box>
                   </Box>
                 </CoverImgStyle>
-              </>
+              </ImageContainer>
             </CoverImgBg>
           )}
         </Grid>

@@ -7,19 +7,18 @@ import { useDispatch } from 'src/store/Store';
 import {
   CardContent,
   Stack,
-  Avatar,
   Typography,
-  CardMedia,
   Chip,
   Grid,
-  Tooltip,
   Box,
   Skeleton
 } from '@mui/material';
+import CustomCardMedia from '../../shared/CustomCardMedia';
 import { IconEye, IconMessage2, IconPoint } from '@tabler/icons';
 import { fetchBlogPost } from 'src/store/apps/blog/BlogSlice';
 import BlankCard from '../../shared/BlankCard';
 import { BlogPostType } from 'src/types/apps/blog';
+import { getCategoryColorScheme } from 'src/types/apps/blog/CategoryEnum';
 
 interface Btype {
   post: BlogPostType;
@@ -28,7 +27,7 @@ interface Btype {
 
 const BlogCard = ({ post }: Btype) => {
   const dispatch = useDispatch();
-  const { coverImg, title, view, comments, category, author, createdAt }: any = post;
+  const { coverImg, title, view, comments, category, createdAt }: any = post;
   const linkTo = title
     .toLowerCase()
     .replace(/ /g, '-')
@@ -41,7 +40,7 @@ const BlogCard = ({ post }: Btype) => {
     const timer = setTimeout(() => {
       setLoading(false);
     }, 700);
-    
+
     return () => clearTimeout(timer);
   }, []);
 
@@ -65,32 +64,39 @@ const BlogCard = ({ post }: Btype) => {
               to={`/apps/blog/detail/${linkTo}`}
               onClick={() => dispatch(fetchBlogPost(linkTo))}
             >
-              <CardMedia component="img" height="240" image={coverImg} alt="green iguana" />
+              <CustomCardMedia
+                src={coverImg}
+                alt={title || "Blog image"}
+              />
             </Typography>
-            <CardContent>
-              <Stack direction="row" sx={{ marginTop: '-45px' }}>
-                <Tooltip title={author?.name} placement="top">
-                  <Avatar aria-label="recipe" src={author?.avatar}></Avatar>
-                </Tooltip>
-                <Chip
-                  sx={{ marginLeft: 'auto', marginTop: '-21px', backgroundColor: 'white' }}
-                  label="2 min Read"
-                  size="small"
-                ></Chip>
-              </Stack>
-              <Chip label={category} size="small" sx={{ marginTop: 2 }}></Chip>
-              <Box my={3}>
+            <CardContent sx={{ pt: 2, px: 3 }}>
+              <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                 <Typography
                   gutterBottom
                   variant="h5"
                   color="inherit"
-                  sx={{ textDecoration: 'none' }}
+                  sx={{
+                    textDecoration: 'none',
+                    textAlign: 'center',
+                    width: '100%'
+                  }}
                   component={Link}
                   to={`/apps/blog/detail/${linkTo}`}
                   onClick={() => dispatch(fetchBlogPost(linkTo))}
                 >
                   {title}
                 </Typography>
+                <Stack direction="row" justifyContent="center" mt={1}>
+                  <Chip
+                    label={category}
+                    size="small"
+                    sx={{
+                      backgroundColor: getCategoryColorScheme(category).backgroundColor,
+                      color: getCategoryColorScheme(category).textColor,
+                      fontWeight: 500
+                    }}
+                  />
+                </Stack>
               </Box>
               <Stack direction="row" gap={3} alignItems="center">
                 <Stack direction="row" gap={1} alignItems="center">

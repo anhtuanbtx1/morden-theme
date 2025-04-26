@@ -29,7 +29,7 @@ const GiftCard = () => {
     const timer = setTimeout(() => {
       setLoading(false);
     }, 700);
-    
+
     return () => clearTimeout(timer);
   }, []);
 
@@ -51,7 +51,16 @@ const GiftCard = () => {
               {isLoading ? (
                 <Skeleton variant="rectangular" animation="wave" width="100%" height={160}></Skeleton>
               ) : (
-                <CardMedia component="img" image={card.avatar} sx={{ height: 160, borderRadius: 2 }} />
+                <CardMedia
+                  component="img"
+                  image={card.avatar}
+                  sx={{
+                    borderRadius: 2,
+                    width: '100%',
+                    objectFit: 'contain',
+                    aspectRatio: '16/9'
+                  }}
+                />
               )}
               <Stack spacing={2} mt={3}>
                 <Button size="large" variant="contained" color="primary">

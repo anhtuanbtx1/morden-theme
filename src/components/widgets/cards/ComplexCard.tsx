@@ -16,9 +16,9 @@ import { IconMessage2, IconEye, IconPoint } from '@tabler/icons';
 import user1 from 'src/assets/images/profile/user-1.jpg';
 import user2 from 'src/assets/images/profile/user-2.jpg';
 import user3 from 'src/assets/images/profile/user-3.jpg';
-import img1 from 'src/assets/images/blog/blog-img1.jpg';
-import img2 from 'src/assets/images/blog/blog-img2.jpg';
-import img3 from 'src/assets/images/blog/blog-img3.jpg';
+import img1 from 'src/assets/images/blog/blog-img1.png';
+import img2 from 'src/assets/images/blog/blog-img2.png';
+import img3 from 'src/assets/images/blog/blog-img3.png';
 
 import BlankCard from '../../shared/BlankCard';
 
@@ -89,9 +89,13 @@ const ComplexCard = () => {
                 ) : (
                   <CardMedia
                     component="img"
-                    height="240"
                     image={author.coveravatar}
                     alt="green iguana"
+                    sx={{
+                      width: '100%',
+                      objectFit: 'contain',
+                      aspectRatio: '16/9'
+                    }}
                   />
                 )}
               </Typography>

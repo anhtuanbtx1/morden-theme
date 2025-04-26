@@ -80,10 +80,14 @@ const PostItem = ({ post }: Props) => {
                   <Grid item sm={12} lg={photo.featured ? 12 : 6} key={photo.img}>
                     <CardMedia
                       component="img"
-                      sx={{ borderRadius: customizer.borderRadius / 4, height: 360 }}
+                      sx={{
+                        borderRadius: customizer.borderRadius / 4,
+                        width: '100%',
+                        objectFit: 'contain',
+                        aspectRatio: '16/9'
+                      }}
                       image={photo.img}
                       alt="cover"
-                      width={'100%'}
                     />
                   </Grid>
                 );
@@ -98,7 +102,8 @@ const PostItem = ({ post }: Props) => {
           <CardMedia
             sx={{
               borderRadius: customizer.borderRadius / 4,
-              height: 300,
+              width: '100%',
+              aspectRatio: '16/9',
               mb: 2,
             }}
             component="iframe"

@@ -16,11 +16,11 @@ import {
   Box, Stack
 } from '@mui/material';
 import BlankCard from '../shared/BlankCard';
-import img1 from 'src/assets/images/blog/blog-img1.jpg';
-import img2 from 'src/assets/images/blog/blog-img2.jpg';
-import img3 from 'src/assets/images/blog/blog-img3.jpg';
-import img4 from 'src/assets/images/blog/blog-img4.jpg';
-import img5 from 'src/assets/images/blog/blog-img5.jpg';
+import img1 from 'src/assets/images/blog/blog-img1.png';
+import img2 from 'src/assets/images/blog/blog-img2.png';
+import img3 from 'src/assets/images/blog/blog-img3.png';
+import img4 from 'src/assets/images/blog/blog-img4.png';
+import img5 from 'src/assets/images/blog/blog-img5.png';
 import { IconDots, IconEdit, IconPlus, IconTrash } from '@tabler/icons';
 
 interface Team {

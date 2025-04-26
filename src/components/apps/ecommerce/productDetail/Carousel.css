@@ -1,6 +1,10 @@
 .centerThumb .slick-current img{
   border:2px solid rgba(0,0,0,1);
 }
+
+.product-image img {
+  border-radius: 5px;
+}
 .slick-prev:before, .slick-next:before{
   color:#2b2b2b
 }

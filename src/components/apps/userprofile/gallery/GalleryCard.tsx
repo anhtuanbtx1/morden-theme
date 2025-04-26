@@ -7,9 +7,10 @@ import {
   TextField,
   InputAdornment,
   IconButton,
-  CardMedia,
   Skeleton
 } from '@mui/material';
+import FullImage from 'src/components/shared/FullImage';
+import 'src/assets/css/fullImage.css';
 import React, { useEffect } from 'react';
 import BlankCard from 'src/components/shared/BlankCard';
 import { useSelector, useDispatch } from 'src/store/Store';
@@ -40,7 +41,7 @@ const GalleryCard = () => {
     const timer = setTimeout(() => {
       setLoading(false);
     }, 500);
-    
+
     return () => clearTimeout(timer);
   }, []);
 
@@ -90,7 +91,10 @@ const GalleryCard = () => {
                     ></Skeleton>
                   </>
                 ) : (
-                  <CardMedia component={'img'} height="220" alt="Remy Sharp" src={photo.cover} />
+                  <FullImage
+                    src={photo.cover}
+                    alt="Remy Sharp"
+                  />
                 )}
                 <Box p={3}>
                   <Stack direction="row" gap={1}>

@@ -2,16 +2,15 @@ import mock from '../mock';
 import { Chance } from 'chance';
 import { random } from 'lodash';
 import { sub } from 'date-fns';
-import s1 from 'src/assets/images/blog/blog-img1.jpg';
-import s2 from 'src/assets/images/blog/blog-img2.jpg';
-import s3 from 'src/assets/images/blog/blog-img3.jpg';
-import s4 from 'src/assets/images/blog/blog-img4.jpg';
-import s5 from 'src/assets/images/blog/blog-img5.jpg';
-import s6 from 'src/assets/images/blog/blog-img6.jpg';
-import s7 from 'src/assets/images/blog/blog-img11.jpg';
-import s8 from 'src/assets/images/blog/blog-img8.jpg';
-import s9 from 'src/assets/images/blog/blog-img9.jpg';
-import s10 from 'src/assets/images/blog/blog-img10.jpg';
+import s1 from 'src/assets/images/blog/blog-img1.png';
+import s2 from 'src/assets/images/blog/blog-img2.png';
+import s3 from 'src/assets/images/blog/blog-img3.png';
+import s4 from 'src/assets/images/blog/blog-img4.png';
+import s5 from 'src/assets/images/blog/blog-img5.png';
+import s6 from 'src/assets/images/blog/blog-img6.png';
+import s7 from 'src/assets/images/blog/blog-img7.png';
+import s8 from 'src/assets/images/blog/blog-img8.png';
+
 
 import user1 from 'src/assets/images/profile/user-1.jpg';
 import user2 from 'src/assets/images/profile/user-2.jpg';
@@ -74,13 +73,13 @@ const BlogComment: BlogType[] = [
 const BlogPost: BlogPostType[] = [
   {
     id: chance.integer({ min: 1, max: 2000 }),
-    title: 'Garmins Instinct Crossover is a rugged hybrid smartwatch',
+    title: 'Orochi',
     content: chance.paragraph({ sentences: 2 }),
     coverImg: s1,
     createdAt: sub(new Date(), { days: 8, hours: 6, minutes: 20 }),
     view: random(9999),
     share: random(9999),
-    category: 'Gadget',
+    category: 'KOF',
     featured: false,
     author: {
       id: chance.integer({ min: 1, max: 2000 }),
@@ -91,13 +90,13 @@ const BlogPost: BlogPostType[] = [
   },
   {
     id: chance.integer({ min: 1, max: 2000 }),
-    title: 'After Twitter Staff Cuts, Survivors Face ‘Radio Silence',
+    title: 'K',
     content: chance.paragraph({ sentences: 2 }),
     coverImg: s2,
     createdAt: sub(new Date(), { days: 7, hours: 3, minutes: 20 }),
     view: random(9999),
     share: random(9999),
-    category: 'Lifestyle',
+    category: 'KOF',
     featured: false,
     author: {
       id: chance.integer({ min: 1, max: 2000 }),
@@ -108,13 +107,13 @@ const BlogPost: BlogPostType[] = [
   },
   {
     id: chance.integer({ min: 1, max: 2000 }),
-    title: 'Apple is apparently working on a new ‘streamlined’ accessibility for iOS',
+    title: 'Dương Tiễn',
     content: chance.paragraph({ sentences: 2 }),
     coverImg: s3,
     createdAt: sub(new Date(), { days: 5, hours: 2, minutes: 20 }),
     view: random(9999),
     share: random(9999),
-    category: 'Design',
+    category: 'Tây Du Ký',
     featured: false,
     author: {
       id: chance.integer({ min: 1, max: 2000 }),
@@ -125,13 +124,13 @@ const BlogPost: BlogPostType[] = [
   },
   {
     id: chance.integer({ min: 1, max: 2000 }),
-    title: 'Why Figma is selling to Adobe for $20 billion',
+    title: 'Quan Âm',
     content: chance.paragraph({ sentences: 2 }),
     coverImg: s4,
     createdAt: sub(new Date(), { days: 7, hours: 6, minutes: 20 }),
     view: random(9999),
     share: random(9999),
-    category: 'Design',
+    category: 'Tây Du Ký',
     featured: false,
     author: {
       id: chance.integer({ min: 1, max: 2000 }),
@@ -142,13 +141,13 @@ const BlogPost: BlogPostType[] = [
   },
   {
     id: chance.integer({ min: 1, max: 2000 }),
-    title: 'Streaming video way before it was cool, go dark tomorrow',
+    title: 'Ash Crimson',
     content: chance.paragraph({ sentences: 2 }),
     coverImg: s5,
     createdAt: sub(new Date(), { days: 4, hours: 6, minutes: 20 }),
     view: random(9999),
     share: random(9999),
-    category: 'Lifestyle',
+    category: 'KOF',
     featured: false,
     author: {
       id: chance.integer({ min: 1, max: 2000 }),
@@ -159,13 +158,13 @@ const BlogPost: BlogPostType[] = [
   },
   {
     id: chance.integer({ min: 1, max: 2000 }),
-    title: 'As yen tumbles, gadget-loving Japan goes for secondhand iPhones ',
+    title: 'Terry',
     content: chance.paragraph({ sentences: 2 }),
     coverImg: s6,
     createdAt: sub(new Date(), { days: 2, hours: 6, minutes: 20 }),
     view: random(9999),
     share: random(9999),
-    category: 'Gadget',
+    category: 'KOF',
     featured: false,
     author: {
       id: chance.integer({ min: 1, max: 2000 }),
@@ -176,13 +175,13 @@ const BlogPost: BlogPostType[] = [
   },
   {
     id: chance.integer({ min: 1, max: 2000 }),
-    title: 'Intel loses bid to revive antitrust case against patent foe Fortress',
+    title: 'Triển Chiêu',
     content: chance.paragraph({ sentences: 2 }),
     coverImg: s7,
     createdAt: sub(new Date(), { days: 3, hours: 6, minutes: 20 }),
     view: random(9999),
     share: random(9999),
-    category: 'Social',
+    category: 'Anh Hùng',
     featured: false,
     author: {
       id: chance.integer({ min: 1, max: 2000 }),
@@ -193,13 +192,13 @@ const BlogPost: BlogPostType[] = [
   },
   {
     id: chance.integer({ min: 1, max: 2000 }),
-    title: 'COVID outbreak deepens as more lockdowns loom in China',
+    title: 'Phật Tổ Như Lai',
     content: chance.paragraph({ sentences: 2 }),
     coverImg: s8,
     createdAt: sub(new Date(), { days: 4, hours: 6, minutes: 20 }),
     view: random(9999),
     share: random(9999),
-    category: 'Health',
+    category: 'Tây Du Ký',
     featured: false,
     author: {
       id: chance.integer({ min: 1, max: 2000 }),
@@ -207,41 +206,8 @@ const BlogPost: BlogPostType[] = [
       name: chance.name(),
     },
     comments: BlogComment,
-  },
-  {
-    id: chance.integer({ min: 1, max: 2000 }),
-    title: 'Early Black Friday Amazon deals: cheap TVs, headphones, laptops',
-    content: chance.paragraph({ sentences: 2 }),
-    coverImg: s9,
-    createdAt: sub(new Date(), { days: 5, hours: 3, minutes: 20 }),
-    view: random(9999),
-    share: random(9999),
-    category: 'Gadget',
-    featured: true,
-    author: {
-      id: chance.integer({ min: 1, max: 2000 }),
-      avatar: user4,
-      name: chance.name(),
-    },
-    comments: BlogComment,
-  },
-  {
-    id: chance.integer({ min: 1, max: 2000 }),
-    title: 'Presented by Max Rushden with Barry Glendenning, Philippe Auclair',
-    content: chance.paragraph({ sentences: 2 }),
-    coverImg: s10,
-    createdAt: sub(new Date(), { days: 0, hours: 1, minutes: 20 }),
-    view: random(9999),
-    share: random(9999),
-    category: 'Health',
-    featured: true,
-    author: {
-      id: chance.integer({ min: 1, max: 2000 }),
-      avatar: user5,
-      name: chance.name(),
-    },
-    comments: BlogComment,
-  },
+  }
+ 
 ];
 
 mock.onGet('/api/data/blog/BlogPosts').reply(() => {

@@ -1,0 +1,27 @@
+/* Direct CSS overrides for Material UI components */
+
+/* Target all possible CardMedia classes */
+.css-1rdskps-MuiCardMedia-root,
+[class*="MuiCardMedia-root"],
+.MuiCardMedia-root,
+.MuiCardMedia-img,
+.MuiCardMedia-media {
+  display: flex !important;
+  height: 500px !important;
+  align-items: center !important;
+  justify-content: center !important;
+  max-height: none !important;
+  object-fit: contain !important;
+}
+
+/* Target img elements inside CardMedia */
+.MuiCardMedia-root img,
+.MuiCardMedia-img img,
+.MuiCardMedia-media img,
+[class*="MuiCardMedia"] img {
+  max-width: 100% !important;
+  max-height: 100% !important;
+  width: auto !important;
+  height: auto !important;
+  object-fit: contain !important;
+}

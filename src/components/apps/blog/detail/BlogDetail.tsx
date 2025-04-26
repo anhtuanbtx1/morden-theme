@@ -5,24 +5,24 @@ import { useLocation } from 'react-router-dom';
 import {
   CardContent,
   Stack,
-  Avatar,
   Typography,
-  CardMedia,
   Chip,
-  Tooltip,
   Box,
   Divider,
   TextField,
   Button,
   Skeleton
 } from '@mui/material';
+import CustomCardMedia from '../../../shared/CustomCardMedia';
 import Breadcrumb from 'src/layouts/full/shared/breadcrumb/Breadcrumb';
 import { IconEye, IconMessage2, IconPoint, IconQuote } from '@tabler/icons';
+import { getCategoryColorScheme } from 'src/types/apps/blog/CategoryEnum';
 import { format } from 'date-fns';
 import BlogComment from './BlogComment';
 import { uniqueId } from 'lodash';
 import { addComment } from 'src/store/apps/blog/BlogSlice';
 import BlankCard from '../../../shared/BlankCard';
+import BlogImage from '../BlogImage';
 import { AppState, useDispatch, useSelector } from 'src/store/Store';
 import type { BlogPostType, BlogType } from 'src/types/apps/blog';
 
@@ -77,7 +77,7 @@ const BlogDetail = () => {
     const timer = setTimeout(() => {
       setLoading(false);
     }, 700);
-    
+
     return () => clearTimeout(timer);
   }, []);
 
@@ -97,30 +97,44 @@ const BlogDetail = () => {
               ></Skeleton>
             </>
           ) : (
-            <CardMedia component="img" height="440" image={post?.coverImg} alt="green iguana" />
+            <CustomCardMedia
+              src={post?.coverImg || ""}
+              alt={post?.title || "Blog detail image"}
+            />
           )}
-          <CardContent>
+          <CardContent sx={{ pt: 2, px: 3 }}>
             <Stack direction="row" sx={{ marginTop: '-45px' }}>
-              <Tooltip title={post ? post?.author.name : ''} placement="top">
-                <Avatar aria-label="recipe" src={post?.author.avatar}></Avatar>
-              </Tooltip>
               <Chip
                 sx={{ marginLeft: 'auto', marginTop: '-21px', backgroundColor: 'white' }}
                 label="2 min Read"
                 size="small"
               ></Chip>
             </Stack>
-            <Chip label={post?.category} size="small" sx={{ marginTop: 2 }}></Chip>
-            <Box my={3}>
+            <Box my={2} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
               <Typography
                 gutterBottom
                 variant="h1"
                 fontWeight={600}
                 color="inherit"
-                sx={{ textDecoration: 'none' }}
+                sx={{
+                  textDecoration: 'none',
+                  textAlign: 'center',
+                  width: '100%'
+                }}
               >
                 {post?.title}
               </Typography>
+              <Stack direction="row" justifyContent="center" mt={1}>
+                <Chip
+                  label={post?.category}
+                  size="small"
+                  sx={{
+                    backgroundColor: getCategoryColorScheme(post?.category || '').backgroundColor,
+                    color: getCategoryColorScheme(post?.category || '').textColor,
+                    fontWeight: 500
+                  }}
+                />
+              </Stack>
             </Box>
             <Stack direction="row" gap={3} alignItems="center">
               <Stack direction="row" gap={1} alignItems="center">
@@ -148,6 +162,14 @@ const BlogDetail = () => {
               other sites and links as well. It allows you to start your bid at the bottom and
               slowly work your way to the top of the list.
             </p>
+
+            {/* Example of using the new BlogImage component */}
+            <BlogImage
+              src={post?.coverImg || '/images/blog/blog1.jpg'}
+              alt="Blog content image"
+              caption="This is an example of an auto-scaling image in the blog content"
+            />
+
             <p>
               Gigure out what it is or what it can do. MTA web directory is the simplest way in
               which one can bid on a link, or a few links if they wish to do so. The link directory

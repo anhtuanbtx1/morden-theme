@@ -1,0 +1,15 @@
+/* Override for Material UI CardMedia component */
+.css-1rdskps-MuiCardMedia-root {
+  display: flex !important; /* Override display:block */
+  height: 500px !important;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Additional overrides for other CardMedia variants */
+.MuiCardMedia-root {
+  display: flex !important;
+  height: 500px !important;
+  align-items: center;
+  justify-content: center;
+}

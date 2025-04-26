@@ -20,11 +20,11 @@ interface StateType {
 const initialState: StateType = {
   activeDir: 'ltr',
   activeMode: 'dark', // Changed from 'light' to 'dark'
-  activeTheme: 'BLUE_THEME',
+  activeTheme: 'AQUA_THEME',
   SidebarWidth: 270,
   MiniSidebarWidth: 87,
   TopbarHeight: 70,
-  isLayout: 'boxed',
+  isLayout: 'full',
   isCollapse: false,
   isSidebarHover: false,
   isMobileSidebar: false,

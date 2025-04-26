@@ -1,8 +1,8 @@
 import React, {useEffect} from 'react';
 import { CardContent, Typography, Grid, Card, CardMedia, Box, IconButton, Stack, Skeleton } from '@mui/material';
-import img1 from 'src/assets/images/blog/blog-img5.jpg';
-import img2 from 'src/assets/images/blog/blog-img4.jpg';
-import img3 from 'src/assets/images/blog/blog-img3.jpg';
+import img1 from 'src/assets/images/blog/blog-img5.png';
+import img2 from 'src/assets/images/blog/blog-img4.png';
+import img3 from 'src/assets/images/blog/blog-img3.png';
 import { IconPlayerPlay, IconPlayerSkipBack, IconPlayerSkipForward } from '@tabler/icons';
 
 interface musiccardType {
@@ -37,7 +37,7 @@ const MusicCard = () => {
     const timer = setTimeout(() => {
       setLoading(false);
     }, 700);
-    
+
     return () => clearTimeout(timer);
   }, []);
 
@@ -72,7 +72,11 @@ const MusicCard = () => {
             ) : (
               <CardMedia
                 component="img"
-                sx={{ width: '100%', height: 180 }}
+                sx={{
+                  width: '100%',
+                  objectFit: 'contain',
+                  aspectRatio: '16/9'
+                }}
                 image={card.img}
                 alt="Live from space album cover"
               />

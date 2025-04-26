@@ -8,6 +8,8 @@ import { store } from './store/Store';
 import Spinner from './views/spinner/Spinner';
 import './utils/i18n';
 import './_mockApis';
+import './assets/css/customOverrides.css';
+import './assets/css/globalOverrides.css';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(

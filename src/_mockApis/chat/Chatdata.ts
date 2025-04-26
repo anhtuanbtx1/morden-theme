@@ -1,5 +1,5 @@
 import mock from '../mock';
-import bg1 from 'src/assets/images/blog/blog-img1.jpg';
+import bg1 from 'src/assets/images/blog/blog-img1.png';
 import user1 from 'src/assets/images/profile/user-1.jpg';
 import user2 from 'src/assets/images/profile/user-2.jpg';
 import user3 from 'src/assets/images/profile/user-3.jpg';

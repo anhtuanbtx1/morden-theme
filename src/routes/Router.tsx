@@ -44,26 +44,6 @@ const MuiTooltip = Loadable(lazy(() => import('../views/ui-components/MuiTooltip
 const MuiTransferList = Loadable(lazy(() => import('../views/ui-components/MuiTransferList')));
 const MuiTypography = Loadable(lazy(() => import('../views/ui-components/MuiTypography')));
 
-// form elements
-const MuiAutoComplete = Loadable(
-  lazy(() => import('../views/forms/form-elements/MuiAutoComplete')),
-);
-const MuiButton = Loadable(lazy(() => import('../views/forms/form-elements/MuiButton')));
-const MuiCheckbox = Loadable(lazy(() => import('../views/forms/form-elements/MuiCheckbox')));
-const MuiRadio = Loadable(lazy(() => import('../views/forms/form-elements/MuiRadio')));
-const MuiSlider = Loadable(lazy(() => import('../views/forms/form-elements/MuiSlider')));
-const MuiDateTime = Loadable(lazy(() => import('../views/forms/form-elements/MuiDateTime')));
-const MuiSwitch = Loadable(lazy(() => import('../views/forms/form-elements/MuiSwitch')));
-
-// forms
-const FormLayouts = Loadable(lazy(() => import('../views/forms/FormLayouts')));
-const FormCustom = Loadable(lazy(() => import('../views/forms/FormCustom')));
-const FormHorizontal = Loadable(lazy(() => import('../views/forms/FormHorizontal')));
-const FormVertical = Loadable(lazy(() => import('../views/forms/FormVertical')));
-const FormWizard = Loadable(lazy(() => import('../views/forms/FormWizard')));
-const FormValidation = Loadable(lazy(() => import('../views/forms/FormValidation')));
-const QuillEditor = Loadable(lazy(() => import('../views/forms/quill-editor/QuillEditor')));
-
 // pages
 const RollbaseCASL = Loadable(lazy(() => import('../views/pages/rollbaseCASL/RollbaseCASL')));
 const Treeview = Loadable(lazy(() => import('../views/pages/treeview/Treeview')));
@@ -117,7 +97,7 @@ const Router = [
     path: '/',
     element: <FullLayout />,
     children: [
-      { path: '/', element: <Navigate to="/dashboards/modern?theme=dark" /> },
+      { path: '/', element: <Navigate to="/dashboards/modern" /> },
       { path: '/dashboards/modern', exact: true, element: <ModernDash /> },
       { path: '/dashboards/ecommerce', exact: true, element: <EcommerceDash /> },
       { path: '/apps/contacts', element: <Contacts /> },
@@ -159,21 +139,7 @@ const Router = [
       { path: '/tables/fixed-header', element: <FixedHeaderTable /> },
       { path: '/tables/collapsible', element: <CollapsibleTable /> },
       { path: '/tables/search', element: <SearchTable /> },
-      { path: '/forms/form-elements/autocomplete', element: <MuiAutoComplete /> },
-      { path: '/forms/form-elements/button', element: <MuiButton /> },
-      { path: '/forms/form-elements/checkbox', element: <MuiCheckbox /> },
-      { path: '/forms/form-elements/radio', element: <MuiRadio /> },
-      { path: '/forms/form-elements/slider', element: <MuiSlider /> },
-      { path: '/forms/form-elements/date-time', element: <MuiDateTime /> },
-      { path: '/forms/form-elements/switch', element: <MuiSwitch /> },
-      { path: '/forms/form-elements/switch', element: <MuiSwitch /> },
-      { path: '/forms/form-layouts', element: <FormLayouts /> },
-      { path: '/forms/form-custom', element: <FormCustom /> },
-      { path: '/forms/form-wizard', element: <FormWizard /> },
-      { path: '/forms/form-validation', element: <FormValidation /> },
-      { path: '/forms/form-horizontal', element: <FormHorizontal /> },
-      { path: '/forms/form-vertical', element: <FormVertical /> },
-      { path: '/forms/quill-editor', element: <QuillEditor /> },
+
       { path: '/charts/area-chart', element: <AreaChart /> },
       { path: '/charts/line-chart', element: <LineChart /> },
       { path: '/charts/gredient-chart', element: <GredientChart /> },

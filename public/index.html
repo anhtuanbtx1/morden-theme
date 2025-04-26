@@ -11,6 +11,7 @@
     />
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="%PUBLIC_URL%/override.css" rel="stylesheet">
     <!--
       Notice the use of %PUBLIC_URL% in the tags above.
       It will be replaced with the URL of the `public` folder during the build.
@@ -21,10 +22,38 @@
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
     <title>React App</title>
+    <style>
+      /* Override for Material UI CardMedia component */
+      .css-1rdskps-MuiCardMedia-root {
+        display: flex !important;
+        height: 500px !important;
+        align-items: center !important;
+        justify-content: center !important;
+      }
+
+      /* Additional overrides for other CardMedia variants */
+      .MuiCardMedia-root {
+        display: flex !important;
+        height: 500px !important;
+        align-items: center !important;
+        justify-content: center !important;
+      }
+    </style>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
+    <style>
+      /* Inline styles to override Material UI CardMedia */
+      .css-1rdskps-MuiCardMedia-root,
+      [class*="css"][class*="MuiCardMedia-root"] {
+        display: flex !important;
+        height: 500px !important;
+        align-items: center !important;
+        justify-content: center !important;
+        max-height: none !important;
+      }
+    </style>
     <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.

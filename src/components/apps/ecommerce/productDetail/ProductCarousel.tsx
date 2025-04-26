@@ -8,6 +8,8 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import './Carousel.css';
+import FullImage from 'src/components/shared/FullImage';
+import 'src/assets/css/fullImage.css';
 
 //Carousel slider data
 import SliderData from './SliderData';
@@ -56,20 +58,18 @@ const ProductCarousel = () => {
     <Box>
       <Slider asNavFor={nav2} ref={(slider: any) => (slider1.current = slider)}>
         <Box>
-          <img
+          <FullImage
             src={getProductImage}
             alt={getProductImage}
-            width="100%"
-            style={{ borderRadius: '5px' }}
+            className="product-image"
           />
         </Box>
         {SliderData.map((step) => (
           <Box key={step.id}>
-            <img
+            <FullImage
               src={step.imgPath}
               alt={step.imgPath}
-              width="100%"
-              style={{ borderRadius: '5px' }}
+              className="product-image"
             />
           </Box>
         ))}
@@ -80,7 +80,12 @@ const ProductCarousel = () => {
             src={getProductImage}
             alt={getProductImage}
             width="100%"
-            style={{ borderRadius: '5px' }}
+            style={{
+              borderRadius: '5px',
+              objectFit: 'contain',
+              height: 'auto',
+              maxHeight: '100px'
+            }}
           />
         </Box>
         {SliderData.map((step) => (
@@ -89,7 +94,12 @@ const ProductCarousel = () => {
               src={step.imgPath}
               alt={step.imgPath}
               width="100%"
-              style={{ borderRadius: '5px' }}
+              style={{
+                borderRadius: '5px',
+                objectFit: 'contain',
+                height: 'auto',
+                maxHeight: '100px'
+              }}
             />
           </Box>
         ))}

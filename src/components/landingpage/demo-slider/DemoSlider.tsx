@@ -6,6 +6,8 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import './demo-slider.css';
+import FullImage from 'src/components/shared/FullImage';
+import 'src/assets/css/fullImage.css';
 
 // images
 import demo1 from 'src/assets/images/landingpage/demos/demo-main.jpg';
@@ -28,7 +30,7 @@ interface sliderData {
   demo: string;
   applink?: boolean;
 }
-  
+
 const StyledButton = styled(Button)(({ theme }) => ({
   padding: '12px 37px',
   fontSize: '16px',
@@ -139,7 +141,10 @@ const DemoSlider = () => {
                 >
                   <StyledChip color="primary" label={slider.demo}></StyledChip>
                 </Stack>
-                <img src={slider.avatar} alt="demos" />
+                <FullImage
+                  src={slider.avatar}
+                  alt="demos"
+                />
                 {slider.applink ? (
                   <NavLink to={slider.link}>
                     <StyledButton variant="contained">Live Preview</StyledButton>

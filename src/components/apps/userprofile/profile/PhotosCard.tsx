@@ -63,14 +63,26 @@ const PhotosCard = () => {
     const timer = setTimeout(() => {
       setLoading(false);
     }, 500);
-    
+
     return () => clearTimeout(timer);
   }, []);
 
   return (
     <ChildCard>
       <Typography variant="h4">Photos</Typography>
-      <ImageList cols={3} gap={20}>
+      <ImageList
+        cols={3}
+        gap={20}
+        sx={{
+          '& .MuiImageListItem-root': {
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            overflow: 'hidden',
+            height: '150px !important'
+          }
+        }}
+      >
         {photos.map((photo) => (
           <Box key={photo.id}>
             {
@@ -90,7 +102,14 @@ const PhotosCard = () => {
                     srcSet={`${photo.img} 1x, ${photo.img} 2x`}
                     alt={photo.img}
                     loading="lazy"
-                    style={{ borderRadius: 8 }}
+                    style={{
+                      borderRadius: 8,
+                      width: 'auto',
+                      height: 'auto',
+                      maxWidth: '100%',
+                      maxHeight: '100%',
+                      objectFit: 'contain'
+                    }}
                   />
                 </ImageListItem>
               )}
