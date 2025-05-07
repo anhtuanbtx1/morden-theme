@@ -17,7 +17,8 @@ interface MenuitemsType {
 import {
   IconShoppingCart,
   IconAperture,
-  IconMessage2
+  IconMessage2,
+  IconList
 } from '@tabler/icons';
 
 const Menuitems: MenuitemsType[] = [
@@ -50,6 +51,12 @@ const Menuitems: MenuitemsType[] = [
     title: 'Blog',
     icon: IconMessage2,
     href: '/apps/blog/posts',
+  },
+  {
+    id: uniqueId(),
+    title: 'Danh sách',
+    icon: IconList,
+    href: '/apps/blog/list',
   },
 ];
 

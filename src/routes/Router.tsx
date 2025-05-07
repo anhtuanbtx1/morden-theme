@@ -12,7 +12,10 @@ const EcommerceDash = Loadable(lazy(() => import('../views/dashboard/Ecommerce')
 
 /* ****Apps***** */
 const Blog = Loadable(lazy(() => import('../views/apps/blog/Blog')));
+const BlogList = Loadable(lazy(() => import('../views/apps/blog/BlogList')));
 const BlogDetail = Loadable(lazy(() => import('../views/apps/blog/BlogPost')));
+const BlogCreate = Loadable(lazy(() => import('../views/apps/blog/BlogCreate')));
+const BlogEdit = Loadable(lazy(() => import('../views/apps/blog/BlogEdit')));
 const Contacts = Loadable(lazy(() => import('../views/apps/contacts/Contacts')));
 const Chats = Loadable(lazy(() => import('../views/apps/chat/Chat')));
 const Notes = Loadable(lazy(() => import('../views/apps/notes/Notes')));
@@ -102,7 +105,10 @@ const Router = [
       { path: '/dashboards/ecommerce', exact: true, element: <EcommerceDash /> },
       { path: '/apps/contacts', element: <Contacts /> },
       { path: '/apps/blog/posts', element: <Blog /> },
+      { path: '/apps/blog/list', element: <BlogList /> },
       { path: '/apps/blog/detail/:id', element: <BlogDetail /> },
+      { path: '/apps/blog/create', element: <BlogCreate /> },
+      { path: '/apps/blog/edit/:id', element: <BlogEdit /> },
       { path: '/apps/chats', element: <Chats /> },
       { path: '/apps/email', element: <Email /> },
       { path: '/apps/notes', element: <Notes /> },
