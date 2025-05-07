@@ -1,0 +1,53 @@
+/* Fix for blog card images */
+
+/* Override global styles for CardMedia in blog cards */
+.uniform-card .MuiCardMedia-root,
+.uniform-card .MuiCardMedia-img,
+.uniform-card .MuiCardMedia-media,
+.uniform-card [class*="MuiCardMedia"] {
+  height: 300px !important;
+  min-height: 300px !important;
+  max-height: 300px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  overflow: hidden !important;
+}
+
+/* Target img elements inside CardMedia */
+.uniform-card .MuiCardMedia-root img,
+.uniform-card .MuiCardMedia-img img,
+.uniform-card .MuiCardMedia-media img,
+.uniform-card [class*="MuiCardMedia"] img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  object-position: center !important;
+}
+
+/* Ensure card content has proper spacing */
+.uniform-card .card-content {
+  padding: 24px !important;
+  flex-grow: 1 !important;
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+/* Make all cards in a row the same height */
+.MuiGrid-container .MuiGrid-item {
+  display: flex !important;
+}
+
+.MuiGrid-container .MuiGrid-item > * {
+  width: 100% !important;
+}
+
+/* Ensure proper hover effect */
+.hoverCard {
+  transition: transform 0.3s ease, box-shadow 0.3s ease !important;
+}
+
+.hoverCard:hover {
+  transform: translateY(-8px) !important;
+  box-shadow: 0 16px 32px rgba(0,0,0,0.18) !important;
+}

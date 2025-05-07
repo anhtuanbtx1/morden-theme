@@ -16,6 +16,7 @@ const BlogList = Loadable(lazy(() => import('../views/apps/blog/BlogList')));
 const BlogDetail = Loadable(lazy(() => import('../views/apps/blog/BlogPost')));
 const BlogCreate = Loadable(lazy(() => import('../views/apps/blog/BlogCreate')));
 const BlogEdit = Loadable(lazy(() => import('../views/apps/blog/BlogEdit')));
+const BlogGalleryPage = Loadable(lazy(() => import('../views/apps/blog/BlogGalleryPage')));
 const Contacts = Loadable(lazy(() => import('../views/apps/contacts/Contacts')));
 const Chats = Loadable(lazy(() => import('../views/apps/chat/Chat')));
 const Notes = Loadable(lazy(() => import('../views/apps/notes/Notes')));
@@ -109,6 +110,7 @@ const Router = [
       { path: '/apps/blog/detail/:id', element: <BlogDetail /> },
       { path: '/apps/blog/create', element: <BlogCreate /> },
       { path: '/apps/blog/edit/:id', element: <BlogEdit /> },
+      { path: '/apps/blog/gallery', element: <BlogGalleryPage /> },
       { path: '/apps/chats', element: <Chats /> },
       { path: '/apps/email', element: <Email /> },
       { path: '/apps/notes', element: <Notes /> },

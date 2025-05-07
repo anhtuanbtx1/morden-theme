@@ -23,6 +23,7 @@ import { IconDeviceFloppy } from '@tabler/icons';
 import { useSelector, useDispatch } from 'src/store/Store';
 import { AppState } from 'src/store/Store';
 import { fetchBlogPosts } from 'src/store/apps/blog/BlogSlice';
+import { BlogPostType } from 'src/types/apps/blog';
 
 const BlogEdit = () => {
   const navigate = useNavigate();
@@ -45,7 +46,7 @@ const BlogEdit = () => {
   });
 
   // Lấy danh sách bài viết từ Redux store
-  const blogPosts = useSelector((state: AppState) => state.blogReducer.blogposts);
+  const blogPosts = useSelector((state: AppState) => state.blogReducer.blogposts as BlogPostType[]);
 
   // Tìm bài viết cần chỉnh sửa
   useEffect(() => {
@@ -71,9 +72,11 @@ const BlogEdit = () => {
         // Nếu không tìm thấy bài viết, hiển thị thông báo và chuyển hướng về trang danh sách
         console.error(`Không tìm thấy bài viết với ID: ${id}`);
         navigate('/apps/blog/list');
+
         return;
       }
     }
+
     // Đảm bảo loading được tắt sau một khoảng thời gian, ngay cả khi không có dữ liệu
     const timer = setTimeout(() => {
       setLoading(false);

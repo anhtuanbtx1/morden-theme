@@ -1,0 +1,95 @@
+/* Uniform card styles for blog section */
+
+/* Card container */
+.uniform-card {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.uniform-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 16px 32px rgba(0,0,0,0.18);
+}
+
+/* Image container */
+.card-image-container {
+  height: 300px;
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  background-color: #ffffff;
+  padding: 0;
+  margin: 0;
+}
+
+/* Image styling */
+.card-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  padding: 0;
+  margin: 0;
+  transition: transform 0.3s ease;
+}
+
+.card-image-container:hover .card-image {
+  transform: scale(1.05);
+}
+
+/* Card content */
+.card-content {
+  padding: 24px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Card title */
+.card-title {
+  font-weight: 600;
+  margin-bottom: 16px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  min-height: 64px;
+}
+
+/* Card footer */
+.card-footer {
+  margin-top: auto;
+  padding-top: 16px;
+  border-top: 1px solid rgba(0,0,0,0.06);
+  display: flex;
+  align-items: center;
+}
+
+/* Make all cards in a row the same height */
+.MuiGrid-container .MuiGrid-item {
+  display: flex;
+}
+
+.MuiGrid-container .MuiGrid-item > * {
+  width: 100%;
+}
+
+/* Force images to fill their containers properly */
+.MuiCard-root {
+  overflow: hidden;
+}
+
+.MuiCard-root img.card-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}

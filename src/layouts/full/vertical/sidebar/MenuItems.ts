@@ -18,7 +18,8 @@ import {
   IconShoppingCart,
   IconAperture,
   IconMessage2,
-  IconList
+  IconList,
+  IconPhoto
 } from '@tabler/icons';
 
 const Menuitems: MenuitemsType[] = [
@@ -57,6 +58,12 @@ const Menuitems: MenuitemsType[] = [
     title: 'Danh sách',
     icon: IconList,
     href: '/apps/blog/list',
+  },
+  {
+    id: uniqueId(),
+    title: 'Thư viện ảnh',
+    icon: IconPhoto,
+    href: '/apps/blog/gallery',
   },
 ];
 

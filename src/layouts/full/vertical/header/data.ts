@@ -196,6 +196,12 @@ const appsLink:appsLinkType[] = [
     subtext: 'added new blog',
     avatar: ddIcon8
   },
+  {
+    href: '/apps/blog/gallery',
+    title: 'Blog Gallery',
+    subtext: 'View all blog images',
+    avatar: ddIcon8
+  },
 ]
 
 

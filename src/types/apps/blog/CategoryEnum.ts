@@ -5,9 +5,9 @@ export enum BlogCategory {
   ANH_HUNG = 'Anh Hùng',
   SOCIAL = 'Social',
   HEALTH = 'Health',
-  TECHNOLOGY = 'TECHNOLOGY',
+  TECHNOLOGY = 'Technology',
   FASHION = 'Fashion',
-  TRAVEL = 'marvel',
+  TRAVEL = 'Travel',
   FOOD = 'Food',
   BUSINESS = 'Business',
 }

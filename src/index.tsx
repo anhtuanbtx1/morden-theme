@@ -10,6 +10,10 @@ import './utils/i18n';
 import './_mockApis';
 import './assets/css/customOverrides.css';
 import './assets/css/globalOverrides.css';
+import './assets/css/imageStyles.css';
+import './assets/css/fixedImageSize.css';
+import './assets/css/cardStyles.css';
+import './assets/css/blogCardFix.css';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(

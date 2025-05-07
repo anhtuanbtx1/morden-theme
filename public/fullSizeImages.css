@@ -1,0 +1,49 @@
+/* Display images at their natural size */
+.MuiCardMedia-root,
+.MuiCardMedia-img,
+.MuiCardMedia-media,
+[class*="MuiCardMedia-root"],
+[class*="MuiCardMedia"] {
+  display: flex !important;
+  height: auto !important;
+  min-height: 300px !important;
+  max-height: none !important;
+  align-items: center !important;
+  justify-content: center !important;
+  overflow: visible !important;
+  position: relative !important;
+}
+
+/* Target img elements inside CardMedia */
+.MuiCardMedia-root img,
+.MuiCardMedia-img img,
+.MuiCardMedia-media img,
+[class*="MuiCardMedia"] img {
+  max-width: 100% !important;
+  max-height: 100% !important;
+  width: auto !important;
+  height: auto !important;
+  object-fit: contain !important;
+  object-position: center !important;
+}
+
+/* Ensure images are displayed at their natural size */
+img {
+  max-width: 100% !important;
+  height: auto !important;
+}
+
+/* Override any fixed dimensions */
+.MuiCard-root .MuiCardMedia-root {
+  height: auto !important;
+  min-height: 300px !important;
+  padding: 20px !important;
+}
+
+/* Ensure containers have appropriate size */
+.blog-card-image,
+.blog-card-image .MuiCardMedia-root {
+  width: 100% !important;
+  min-height: 300px !important;
+  height: auto !important;
+}

@@ -1,0 +1,54 @@
+/* Custom styles for images in blog section */
+
+/* Enhance image quality */
+img {
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+  max-width: 100%;
+  height: auto;
+}
+
+/* Add smooth transitions */
+.MuiCardMedia-root,
+.MuiCardMedia-img,
+[class*="MuiCardMedia"] {
+  transition: all 0.4s ease !important;
+}
+
+/* Override any max-height restrictions */
+.MuiCardMedia-root,
+.MuiCardMedia-img,
+[class*="MuiCardMedia-root"],
+[class*="MuiCardMedia"] {
+  max-height: none !important;
+  height: auto !important;
+  min-height: 300px !important;
+}
+
+/* Ensure images display at their natural size */
+.MuiCardMedia-root img,
+.MuiCardMedia-img img,
+[class*="MuiCardMedia"] img {
+  width: auto !important;
+  height: auto !important;
+  max-width: 100% !important;
+  max-height: 100% !important;
+  object-fit: contain !important;
+}
+
+/* Add subtle image enhancements */
+.hoverCard img {
+  filter: brightness(1.02) contrast(1.05);
+}
+
+/* Ensure proper container sizing */
+.blog-card-image {
+  width: 100% !important;
+  min-height: 300px !important;
+  height: auto !important;
+}
+
+/* Remove shadow from images */
+.MuiCardMedia-root::after {
+  content: none;
+}

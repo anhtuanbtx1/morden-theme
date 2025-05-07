@@ -1,0 +1,45 @@
+/* Full size images for blog cards */
+.blog-card-image {
+  width: auto !important;
+  height: auto !important;
+  max-width: 100% !important;
+  object-fit: contain !important;
+  object-position: center !important;
+}
+
+/* Container for blog card images */
+.blog-card-image-container {
+  width: 100% !important;
+  min-height: 300px !important;
+  height: auto !important;
+  overflow: visible !important;
+  position: relative !important;
+}
+
+/* Override any Material UI styles */
+.MuiCardMedia-root,
+.MuiCardMedia-img,
+.MuiCardMedia-media,
+[class*="MuiCardMedia"] {
+  height: auto !important;
+  min-height: 300px !important;
+  max-height: none !important;
+  overflow: visible !important;
+}
+
+/* Ensure images display at their natural size */
+.MuiCardMedia-root img,
+.MuiCardMedia-img img,
+.MuiCardMedia-media img,
+[class*="MuiCardMedia"] img {
+  width: auto !important;
+  height: auto !important;
+  max-width: 100% !important;
+  max-height: 100% !important;
+  object-fit: contain !important;
+}
+
+/* Remove fixed aspect ratio */
+.MuiCard-root .MuiCardMedia-root {
+  aspect-ratio: auto;
+}

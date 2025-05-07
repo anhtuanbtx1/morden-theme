@@ -2,7 +2,8 @@ import {
   IconHome,
   IconPoint,
   IconMessage2,
-  IconList
+  IconList,
+  IconPhoto
 } from '@tabler/icons';
 import { uniqueId } from 'lodash';
 
@@ -40,6 +41,12 @@ const Menuitems = [
     title: 'Danh sách',
     icon: IconList,
     href: '/apps/blog/list',
+  },
+  {
+    id: uniqueId(),
+    title: 'Thư viện ảnh',
+    icon: IconPhoto,
+    href: '/apps/blog/gallery',
   },
 ];
 export default Menuitems;

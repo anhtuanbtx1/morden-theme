@@ -11,7 +11,6 @@ import {
   Typography,
   Avatar,
   Chip,
-  Paper,
   IconButton,
   Tooltip,
   Stack,
@@ -116,6 +115,7 @@ const BlogTable = () => {
   return (
     <BlankCard>
       {isLoading ? (
+
         // Hiển thị skeleton loading khi đang tải dữ liệu
         <Box p={3}>
           {[1, 2, 3, 4, 5].map((item) => (
@@ -130,8 +130,16 @@ const BlogTable = () => {
         </Box>
       ) : (
         <>
-          {/* Nút Thêm mới */}
-          <Box p={2} display="flex" justifyContent="flex-end">
+          {/* Các nút hành động */}
+          <Box p={2} display="flex" justifyContent="flex-end" gap={2}>
+            <Button
+              variant="outlined"
+              color="secondary"
+              component={Link}
+              to="/apps/blog/gallery"
+            >
+              Thư viện hình ảnh
+            </Button>
             <Button
               variant="contained"
               color="primary"
@@ -209,9 +217,11 @@ const BlogTable = () => {
                               {post.createdAt ?
                                 (() => {
                                   try {
+
                                     return format(new Date(post.createdAt), 'dd/MM/yyyy');
                                   } catch (error) {
                                     console.error('Lỗi định dạng ngày tháng:', error);
+
                                     return 'Không xác định';
                                   }
                                 })()
