@@ -17,6 +17,7 @@ const BlogDetail = Loadable(lazy(() => import('../views/apps/blog/BlogPost')));
 const BlogCreate = Loadable(lazy(() => import('../views/apps/blog/BlogCreate')));
 const BlogEdit = Loadable(lazy(() => import('../views/apps/blog/BlogEdit')));
 const BlogGalleryPage = Loadable(lazy(() => import('../views/apps/blog/BlogGalleryPage')));
+const Football = Loadable(lazy(() => import('../views/apps/football/Football')));
 const Contacts = Loadable(lazy(() => import('../views/apps/contacts/Contacts')));
 const Chats = Loadable(lazy(() => import('../views/apps/chat/Chat')));
 const Notes = Loadable(lazy(() => import('../views/apps/notes/Notes')));
@@ -105,6 +106,7 @@ const Router = [
       { path: '/dashboards/modern', exact: true, element: <ModernDash /> },
       { path: '/dashboards/ecommerce', exact: true, element: <EcommerceDash /> },
       { path: '/apps/contacts', element: <Contacts /> },
+      { path: '/apps/football/posts', element: <Football /> },
       { path: '/apps/blog/posts', element: <Blog /> },
       { path: '/apps/blog/list', element: <BlogList /> },
       { path: '/apps/blog/detail/:id', element: <BlogDetail /> },

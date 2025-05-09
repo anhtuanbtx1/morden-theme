@@ -12,7 +12,7 @@ import { Link } from 'react-router-dom';
 import { IconEye, IconMessage2, IconPoint } from '@tabler/icons';
 import BlankCard from '../../shared/BlankCard';
 import { format } from 'date-fns';
-import { getCategoryColorScheme } from 'src/types/apps/blog/CategoryEnum';
+import { getFootballCategoryColorScheme } from 'src/types/apps/football/FootballCategoryEnum';
 
 // Interface cho đối tượng hình ảnh
 interface ImageItem {
@@ -23,9 +23,9 @@ interface ImageItem {
   categoryName?: string; // Tên hiển thị của category (optional)
 }
 
-const FullImageBlogCard = ({ image }: { image: ImageItem }) => {
+const FullImageFootballCard = ({ image }: { image: ImageItem }) => {
   // Tạo dữ liệu giả cho card
-  const title = image.name; // Sử dụng trực tiếp tên đã được đặt trong BlogListing
+  const title = image.name; // Sử dụng trực tiếp tên đã được đặt trong FootballListing
   const category = image.category; // Sử dụng category từ dữ liệu hình ảnh
   const categoryName = image.categoryName || category; // Sử dụng categoryName nếu có, nếu không thì dùng category
   const view = Math.floor(Math.random() * 1000) + 100;
@@ -103,8 +103,8 @@ const FullImageBlogCard = ({ image }: { image: ImageItem }) => {
                     label={categoryName}
                     size="small"
                     sx={{
-                      backgroundColor: getCategoryColorScheme(category).backgroundColor,
-                      color: getCategoryColorScheme(category).textColor,
+                      backgroundColor: getFootballCategoryColorScheme(category).backgroundColor,
+                      color: getFootballCategoryColorScheme(category).textColor,
                       fontWeight: 600,
                       borderRadius: '8px',
                       padding: '4px 8px',
@@ -147,4 +147,4 @@ const FullImageBlogCard = ({ image }: { image: ImageItem }) => {
   );
 };
 
-export default FullImageBlogCard;
+export default FullImageFootballCard;

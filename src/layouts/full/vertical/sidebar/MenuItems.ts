@@ -42,14 +42,23 @@ const Menuitems: MenuitemsType[] = [
     icon: IconShoppingCart,
     href: '/dashboards/ecommerce',
   },
-
+  {
+    navlabel: true,
+    subheader: 'Football',
+  },
+  {
+    id: uniqueId(),
+    title: 'Bóng Đá',
+    icon: IconMessage2,
+    href: '/apps/football/posts',
+  },
   {
     navlabel: true,
     subheader: 'Blog',
   },
   {
     id: uniqueId(),
-    title: 'Blog',
+    title: 'Lego',
     icon: IconMessage2,
     href: '/apps/blog/posts',
   },

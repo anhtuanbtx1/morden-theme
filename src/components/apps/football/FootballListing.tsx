@@ -8,24 +8,23 @@ import {
 } from '@mui/material';
 import { useDispatch } from 'src/store/Store';
 import { fetchBlogPosts } from 'src/store/apps/blog/BlogSlice';
-import FullImageBlogCard from './FullImageBlogCard';
-import { BlogCategory } from 'src/types/apps/blog/CategoryEnum';
+import FullImageFootballCard from './FullImageFootballCard';
+import { FootballCategory } from 'src/types/apps/football/FootballCategoryEnum';
 
 
-// Import tất cả hình ảnh từ thư mục blog
-import blogImg1Png from '../../../assets/images/blog/blog-img1.png';
-import blogImg2Png from '../../../assets/images/blog/blog-img2.png';
-import blogImg3Png from '../../../assets/images/blog/blog-img3.png';
-import blogImg4Png from '../../../assets/images/blog/blog-img4.png';
-import blogImg5Png from '../../../assets/images/blog/blog-img5.png';
-import blogImg6Png from '../../../assets/images/blog/blog-img6.png';
-import blogImg7Png from '../../../assets/images/blog/blog-img7.png';
-import blogImg8Png from '../../../assets/images/blog/blog-img8.png';
-import blogImg9Jpg from '../../../assets/images/blog/blog-img9.jpg';
-import blogImg10Jpg from '../../../assets/images/blog/blog-img10.jpg';
-import blogImg11Jpg from '../../../assets/images/blog/Gia_Cat_Luong.png';
-import blogImg12Jpg from '../../../assets/images/blog/Acubis.png';
-import blogImg13Jpg from '../../../assets/images/blog/Yugioh.png';
+// Import tất cả hình ảnh từ thư mục football/manchester_united
+import s1Img from '../../../assets/images/football/manchester_united/s1.jpg';
+import s2Img from '../../../assets/images/football/manchester_united/s2.jpg';
+import s3Img from '../../../assets/images/football/manchester_united/s3.jpg';
+import s4Img from '../../../assets/images/football/manchester_united/s4.jpg';
+import s5Img from '../../../assets/images/football/manchester_united/s5.jpg';
+import s6Img from '../../../assets/images/football/manchester_united/s6.jpg';
+import s7Img from '../../../assets/images/football/manchester_united/s7.jpg';
+import s8Img from '../../../assets/images/football/manchester_united/s8.jpg';
+import s9Img from '../../../assets/images/football/manchester_united/s9.jpg';
+import s10Img from '../../../assets/images/football/manchester_united/s10.jpg';
+import s11Img from '../../../assets/images/football/manchester_united/s11.jpg';
+import s12Img from '../../../assets/images/football/manchester_united/s12.jpg';
 
 // Định nghĩa interface cho đối tượng hình ảnh
 interface ImageItem {
@@ -36,31 +35,34 @@ interface ImageItem {
   categoryName: string; // Tên hiển thị của category
 }
 
-const BlogListing = () => {
+const FootballListing = () => {
   const dispatch = useDispatch();
   const [page, setPage] = useState(1);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const itemsPerPage = 6;
 
-  // Tạo mảng chứa tất cả hình ảnh
-  const blogImages: ImageItem[] = [
-    { src: blogImg1Png, name: 'Orochi', index: 0, category: "KOF", categoryName: 'King of Fighters' },
-    { src: blogImg2Png, name: 'K', index: 1, category: BlogCategory.KOF, categoryName: 'King of Fighters' },
-    { src: blogImg3Png, name: 'Dương Tiễn', index: 2, category: BlogCategory.TAY_DU_KY, categoryName: 'Tây Du Ký' },
-    { src: blogImg4Png, name: 'Phật Quan Âm', index: 3, category: BlogCategory.TAY_DU_KY, categoryName: 'Tây Du Ký' },
-    { src: blogImg5Png, name: 'Ash Crimson', index: 4, category: BlogCategory.TECHNOLOGY, categoryName: 'King of Fighters' },
-    { src: blogImg6Png, name: 'Terry', index: 5, category: BlogCategory.KOF, categoryName: 'King of Fighters' },
-    { src: blogImg7Png, name: 'Triển Chiêu', index: 6, category: BlogCategory.ANH_HUNG, categoryName: 'Anh Hùng' },
-    { src: blogImg8Png, name: 'Phật Tổ Như Lai', index: 7, category: BlogCategory.TAY_DU_KY, categoryName: 'Tây Du Ký' },
-    { src: blogImg9Jpg, name: 'Đường Tam Tạng', index: 8, category: BlogCategory.TAY_DU_KY, categoryName: 'Tây Du Ký' },
-    { src: blogImg10Jpg, name: 'Trư Bát Giới', index: 9, category: BlogCategory.TAY_DU_KY, categoryName: 'Tây Du Ký' },
-    { src: blogImg11Jpg, name: 'Gia Cát Lượng', index: 10, category: BlogCategory.TAM_QUOC, categoryName: 'Tam Quốc Chí' },
-    { src: blogImg12Jpg, name: 'Acubis', index: 11, category: BlogCategory.TECHNOLOGY, categoryName: 'Thần thoại Hy Lạp' },
-    { src: blogImg13Jpg, name: 'Yugioh', index: 12, category: BlogCategory.FASHION, categoryName: 'Game' },
-  ];
+  // Sử dụng FootballCategory từ file FootballCategoryEnum.ts
 
-  // Không cần tính toán tổng số trang dựa trên tất cả hình ảnh nữa
-  // vì chúng ta sẽ sử dụng filteredTotalPages
+  // Tạo mảng chứa tất cả hình ảnh
+  const footballImages: ImageItem[] = [
+    // Cầu thủ
+    { src: s1Img, name: 'Cristiano Ronaldo', index: 0, category: FootballCategory.PLAYER, categoryName: 'Cầu thủ' },
+    { src: s2Img, name: 'Lionel Messi', index: 1, category: FootballCategory.PLAYER, categoryName: 'Cầu thủ' },
+    { src: s3Img, name: 'Neymar Jr', index: 2, category: FootballCategory.PLAYER, categoryName: 'Cầu thủ' },
+    { src: s4Img, name: 'Kylian Mbappé', index: 3, category: FootballCategory.PLAYER, categoryName: 'Cầu thủ' },
+
+    // Câu lạc bộ
+    { src: s5Img, name: 'Manchester United', index: 4, category: FootballCategory.CLUB, categoryName: 'Câu lạc bộ' },
+    { src: s6Img, name: 'Real Madrid', index: 5, category: FootballCategory.CLUB, categoryName: 'Câu lạc bộ' },
+    { src: s7Img, name: 'FC Barcelona', index: 6, category: FootballCategory.CLUB, categoryName: 'Câu lạc bộ' },
+    { src: s8Img, name: 'Bayern Munich', index: 7, category: FootballCategory.CLUB, categoryName: 'Câu lạc bộ' },
+
+    // Giải đấu
+    { src: s9Img, name: 'FIFA World Cup 2022', index: 8, category: FootballCategory.TOURNAMENT, categoryName: 'Giải đấu' },
+    { src: s10Img, name: 'UEFA Champions League', index: 9, category: FootballCategory.TOURNAMENT, categoryName: 'Giải đấu' },
+    { src: s11Img, name: 'Premier League', index: 10, category: FootballCategory.TOURNAMENT, categoryName: 'Giải đấu' },
+    { src: s12Img, name: 'Serie A', index: 11, category: FootballCategory.TOURNAMENT, categoryName: 'Giải đấu' },
+  ];
 
   // Tính toán vị trí bắt đầu và kết thúc cho trang hiện tại
   const startIndex = (page - 1) * itemsPerPage;
@@ -68,8 +70,8 @@ const BlogListing = () => {
 
   // Lọc hình ảnh theo category nếu có
   const filteredImages = selectedCategory
-    ? blogImages.filter(image => image.category === selectedCategory)
-    : blogImages;
+    ? footballImages.filter(image => image.category === selectedCategory)
+    : footballImages;
 
   // Tính toán lại tổng số trang dựa trên hình ảnh đã lọc
   const filteredTotalPages = Math.ceil(filteredImages.length / itemsPerPage);
@@ -89,7 +91,7 @@ const BlogListing = () => {
   };
 
   // Lấy danh sách các category duy nhất
-  const uniqueCategoryNames = Array.from(new Set(blogImages.map(image => ({
+  const uniqueCategoryNames = Array.from(new Set(footballImages.map(image => ({
     code: image.category,
     name: image.categoryName
   }))));
@@ -143,7 +145,7 @@ const BlogListing = () => {
       {currentImages.length > 0 ? (
         currentImages.map((image) => (
           <Grid item xs={12} lg={4} md={4} sm={6} key={image.name} sx={{ display: 'flex' }}>
-            <FullImageBlogCard image={image} />
+            <FullImageFootballCard image={image} />
           </Grid>
         ))
       ) : (
@@ -175,4 +177,4 @@ const BlogListing = () => {
   );
 };
 
-export default BlogListing;
+export default FootballListing;

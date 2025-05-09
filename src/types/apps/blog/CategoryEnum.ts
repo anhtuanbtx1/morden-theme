@@ -3,7 +3,7 @@ export enum BlogCategory {
   KOF = 'KOF',
   TAY_DU_KY = 'Tây Du Ký',
   ANH_HUNG = 'Anh Hùng',
-  SOCIAL = 'Social',
+  TAM_QUOC = 'TAM_QUOC',
   HEALTH = 'Health',
   TECHNOLOGY = 'Technology',
   FASHION = 'Fashion',
@@ -32,7 +32,7 @@ export const categoryColorMap: Record<BlogCategory, CategoryColorScheme> = {
     backgroundColor: '#FFEBEE', // Light Red
     textColor: '#D32F2F'        // Dark Red
   },
-  [BlogCategory.SOCIAL]: {
+  [BlogCategory.TAM_QUOC]: {
     backgroundColor: '#FFF3E0', // Light Orange
     textColor: '#E64A19'        // Dark Orange
   },
