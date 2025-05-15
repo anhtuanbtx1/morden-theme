@@ -11,6 +11,13 @@ import { fetchBlogPosts } from 'src/store/apps/blog/BlogSlice';
 import FullImageFootballCard from './FullImageFootballCard';
 import { FootballCategory } from 'src/types/apps/football/FootballCategoryEnum';
 
+// Khai báo kiểu cho window
+declare global {
+  interface Window {
+    handleFootballSearch: (term: string) => void;
+  }
+}
+
 
 // Import tất cả hình ảnh từ thư mục football/manchester_united
 import s1Img from '../../../assets/images/football/manchester_united/Berbatov.png';
@@ -20,9 +27,9 @@ import s4Img from '../../../assets/images/football/manchester_united/Mount.png';
 import s5Img from '../../../assets/images/football/manchester_united/Matic.png';
 import s6Img from '../../../assets/images/football/manchester_united/Kagawa.png';
 import s7Img from '../../../assets/images/football/manchester_united/Falcao.png';
-import s8Img from '../../../assets/images/football/manchester_united/s8.jpg';
-import s9Img from '../../../assets/images/football/manchester_united/s9.jpg';
-import s10Img from '../../../assets/images/football/manchester_united/s10.jpg';
+import s8Img from '../../../assets/images/football/manchester_united/Pogba.png';
+import s9Img from '../../../assets/images/football/manchester_united/Yoro.png';
+import s10Img from '../../../assets/images/football/manchester_united/Maria.png';
 import s11Img from '../../../assets/images/football/manchester_united/s11.jpg';
 import s12Img from '../../../assets/images/football/manchester_united/s12.jpg';
 import s13Img from '../../../assets/images/football/other/CR7_anas.png';
@@ -40,7 +47,15 @@ const FootballListing = () => {
   const dispatch = useDispatch();
   const [page, setPage] = useState(1);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [searchTerm, setSearchTerm] = useState<string>('');
   const itemsPerPage = 6;
+
+  // Hàm này sẽ được gọi từ component Breadcrumb
+  // Bạn có thể thêm vào global state hoặc context nếu cần
+  window.handleFootballSearch = (term: string) => {
+    setSearchTerm(term);
+    setPage(1); // Reset về trang đầu tiên khi tìm kiếm
+  };
 
   // Sử dụng FootballCategory từ file FootballCategoryEnum.ts
 
@@ -56,11 +71,11 @@ const FootballListing = () => {
     { src: s5Img, name: 'Matic', index: 4, category: FootballCategory.CLUB, categoryName: 'Manchester United' },
     { src: s6Img, name: 'Kagawa', index: 5, category: FootballCategory.CLUB, categoryName: 'Manchester United' },
     { src: s7Img, name: 'Falcao', index: 6, category: FootballCategory.CLUB, categoryName: 'Manchester United' },
-    { src: s8Img, name: 'Bayern Munich', index: 7, category: FootballCategory.CLUB, categoryName: 'Câu lạc bộ' },
+    { src: s8Img, name: 'Pogba', index: 7, category: FootballCategory.CLUB, categoryName: 'Manchester United' },
 
     // Giải đấu
-    { src: s9Img, name: 'FIFA World Cup 2022', index: 8, category: FootballCategory.TOURNAMENT, categoryName: 'Giải đấu' },
-    { src: s10Img, name: 'UEFA Champions League', index: 9, category: FootballCategory.TOURNAMENT, categoryName: 'Giải đấu' },
+    { src: s9Img, name: 'Yoro', index: 8, category: FootballCategory.TOURNAMENT, categoryName: 'Manchester United' },
+    { src: s10Img, name: 'Di Maria', index: 9, category: FootballCategory.TOURNAMENT, categoryName: 'Manchester United' },
     { src: s11Img, name: 'Premier League', index: 10, category: FootballCategory.TOURNAMENT, categoryName: 'Giải đấu' },
     { src: s12Img, name: 'Serie A', index: 11, category: FootballCategory.TOURNAMENT, categoryName: 'Giải đấu' },
 
@@ -72,10 +87,19 @@ const FootballListing = () => {
   const startIndex = (page - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
 
-  // Lọc hình ảnh theo category nếu có
-  const filteredImages = selectedCategory
-    ? footballImages.filter(image => image.category === selectedCategory)
-    : footballImages;
+  // Lọc hình ảnh theo category và searchTerm
+  const filteredImages = footballImages.filter(image => {
+    // Lọc theo category nếu có
+    const categoryMatch = selectedCategory ? image.category === selectedCategory : true;
+
+    // Lọc theo searchTerm nếu có
+    const searchMatch = searchTerm
+      ? image.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        image.categoryName.toLowerCase().includes(searchTerm.toLowerCase())
+      : true;
+
+    return categoryMatch && searchMatch;
+  });
 
   // Tính toán lại tổng số trang dựa trên hình ảnh đã lọc
   const filteredTotalPages = Math.ceil(filteredImages.length / itemsPerPage);
@@ -111,18 +135,32 @@ const FootballListing = () => {
 
   return (
     <Grid container spacing={3}>
+
       {/* Thanh lọc category */}
       <Grid item xs={12} mb={3}>
         <Box sx={{
           display: 'flex',
           flexWrap: 'wrap',
-          gap: 1,
-          p: 2,
-          borderRadius: 2,
+          gap: 1.5,
+          p: 3,
+          borderRadius: 4,
           backgroundColor: 'background.paper',
-          boxShadow: '0 4px 6px rgba(0,0,0,0.1)'
+          boxShadow: '0 6px 12px rgba(0,0,0,0.08)',
+          transition: 'all 0.3s ease',
+          '&:hover': {
+            boxShadow: '0 8px 16px rgba(0,0,0,0.12)'
+          }
         }}>
-          <Typography variant="subtitle1" fontWeight={600} sx={{ mr: 2, alignSelf: 'center' }}>
+          <Typography
+            variant="subtitle1"
+            fontWeight={600}
+            sx={{
+              mr: 3,
+              alignSelf: 'center',
+              color: 'text.primary',
+              fontSize: '1rem'
+            }}
+          >
             Lọc theo category:
           </Typography>
 
@@ -130,7 +168,16 @@ const FootballListing = () => {
             label="Tất cả"
             color={selectedCategory === null ? "primary" : "default"}
             onClick={() => handleCategoryChange(null)}
-            sx={{ fontWeight: 500 }}
+            sx={{
+              fontWeight: 600,
+              borderRadius: 6,
+              py: 0.5,
+              transition: 'all 0.2s ease',
+              '&:hover': {
+                transform: 'translateY(-2px)',
+                boxShadow: '0 4px 8px rgba(0,0,0,0.1)'
+              }
+            }}
           />
 
           {categories.map((category) => (
@@ -139,7 +186,16 @@ const FootballListing = () => {
               label={category.name}
               color={selectedCategory === category.code ? "primary" : "default"}
               onClick={() => handleCategoryChange(category.code)}
-              sx={{ fontWeight: 500 }}
+              sx={{
+                fontWeight: 600,
+                borderRadius: 6,
+                py: 0.5,
+                transition: 'all 0.2s ease',
+                '&:hover': {
+                  transform: 'translateY(-2px)',
+                  boxShadow: '0 4px 8px rgba(0,0,0,0.1)'
+                }
+              }}
             />
           ))}
         </Box>
@@ -155,25 +211,56 @@ const FootballListing = () => {
       ) : (
         <Grid item xs={12}>
           <Box sx={{
-            p: 4,
+            p: 5,
             textAlign: 'center',
-            borderRadius: 2,
+            borderRadius: 4,
             backgroundColor: 'background.paper',
-            boxShadow: '0 4px 6px rgba(0,0,0,0.1)'
+            boxShadow: '0 6px 12px rgba(0,0,0,0.08)',
+            transition: 'all 0.3s ease',
+            '&:hover': {
+              boxShadow: '0 8px 16px rgba(0,0,0,0.12)'
+            }
           }}>
-            <Typography variant="h6">Không tìm thấy hình ảnh nào phù hợp</Typography>
+            <Typography
+              variant="h6"
+              sx={{
+                color: 'text.secondary',
+                fontWeight: 500,
+                fontSize: '1.1rem'
+              }}
+            >
+              Không tìm thấy hình ảnh nào phù hợp
+            </Typography>
           </Box>
         </Grid>
       )}
 
       {/* Phân trang */}
       {currentImages.length > 0 && (
-        <Grid item xs={12} display="flex" justifyContent="center" mt={3}>
+        <Grid item xs={12} display="flex" justifyContent="center" mt={4}>
           <Pagination
             count={filteredTotalPages}
             page={page}
             onChange={handlePageChange}
             color="primary"
+            size="large"
+            showFirstButton
+            showLastButton
+            sx={{
+              '& .MuiPaginationItem-root': {
+                borderRadius: 2,
+                margin: '0 2px',
+                transition: 'all 0.2s ease',
+                '&:hover': {
+                  backgroundColor: 'rgba(25, 118, 210, 0.12)',
+                  transform: 'translateY(-2px)'
+                }
+              },
+              '& .Mui-selected': {
+                fontWeight: 600,
+                boxShadow: '0 2px 4px rgba(25, 118, 210, 0.2)'
+              }
+            }}
           />
         </Grid>
       )}

@@ -16,7 +16,6 @@ interface MenuitemsType {
 }
 import {
   IconShoppingCart,
-  IconAperture,
   IconMessage2,
   IconList,
   IconPhoto
@@ -26,15 +25,6 @@ const Menuitems: MenuitemsType[] = [
   {
     navlabel: true,
     subheader: 'Home',
-  },
-
-  {
-    id: uniqueId(),
-    title: 'Modern',
-    icon: IconAperture,
-    href: '/dashboards/modern',
-    chip: 'New',
-    chipColor: 'secondary',
   },
   {
     id: uniqueId(),
