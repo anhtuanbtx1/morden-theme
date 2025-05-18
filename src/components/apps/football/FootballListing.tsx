@@ -30,9 +30,20 @@ import s7Img from '../../../assets/images/football/manchester_united/Falcao.png'
 import s8Img from '../../../assets/images/football/manchester_united/Pogba.png';
 import s9Img from '../../../assets/images/football/manchester_united/Yoro.png';
 import s10Img from '../../../assets/images/football/manchester_united/Maria.png';
-import s11Img from '../../../assets/images/football/manchester_united/s11.jpg';
-import s12Img from '../../../assets/images/football/manchester_united/s12.jpg';
-import s13Img from '../../../assets/images/football/other/CR7_anas.png';
+import s11Img from '../../../assets/images/football/manchester_united/Sar.png';
+import s12Img from '../../../assets/images/football/manchester_united/Garnacho.png';
+import s13Img from '../../../assets/images/football/manchester_united/Fellaini.png';
+import s14Img from '../../../assets/images/football/manchester_united/Gea.png';
+import s15Img from '../../../assets/images/football/manchester_united/Ronaldo.png';
+import s16Img from '../../../assets/images/football/manchester_united/Antony.png';
+import s17Img from '../../../assets/images/football/manchester_united/Nistelrooy.png';
+import s18Img from '../../../assets/images/football/manchester_united/Eriksen.png';
+import s19Img from '../../../assets/images/football/manchester_united/Fred.png';
+import s20Img from '../../../assets/images/football/manchester_united/Ligt.png';
+import s21Img from '../../../assets/images/football/manchester_united/Martinez.png';
+import s22Img from '../../../assets/images/football/manchester_united/Cavani.png';
+import s23Img from '../../../assets/images/football/manchester_united/Vidic.png';
+
 
 // Định nghĩa interface cho đối tượng hình ảnh
 interface ImageItem {
@@ -76,11 +87,21 @@ const FootballListing = () => {
     // Giải đấu
     { src: s9Img, name: 'Yoro', index: 8, category: FootballCategory.TOURNAMENT, categoryName: 'Manchester United' },
     { src: s10Img, name: 'Di Maria', index: 9, category: FootballCategory.TOURNAMENT, categoryName: 'Manchester United' },
-    { src: s11Img, name: 'Premier League', index: 10, category: FootballCategory.TOURNAMENT, categoryName: 'Giải đấu' },
-    { src: s12Img, name: 'Serie A', index: 11, category: FootballCategory.TOURNAMENT, categoryName: 'Giải đấu' },
+    { src: s11Img, name: 'Van Der Sar', index: 10, category: FootballCategory.TOURNAMENT, categoryName: 'Giải đấu' },
+    { src: s12Img, name: 'Garnacho', index: 11, category: FootballCategory.TOURNAMENT, categoryName: 'Giải đấu' },
 
     // Cầu thủ khác
-    { src: s13Img, name: 'Cristiano Ronaldo', index: 12, category: FootballCategory.PLAYER, categoryName: 'Cầu thủ' },
+    { src: s13Img, name: 'Fellaini', index: 12, category: FootballCategory.PLAYER, categoryName: 'Cầu thủ' },
+    { src: s14Img, name: 'Gea', index: 13, category: FootballCategory.PLAYER, categoryName: 'Cầu thủ' },
+    { src: s15Img, name: 'Ronaldo', index: 14, category: FootballCategory.PLAYER, categoryName: 'Cầu thủ' },
+    { src: s16Img, name: 'Antony', index: 15, category: FootballCategory.PLAYER, categoryName: 'Cầu thủ' },
+    { src: s17Img, name: 'Nistelrooy', index: 16, category: FootballCategory.PLAYER, categoryName: 'Cầu thủ' },
+    { src: s18Img, name: 'Eriksen', index: 17, category: FootballCategory.PLAYER, categoryName: 'Cầu thủ' },
+    { src: s19Img, name: 'Fred', index: 18, category: FootballCategory.PLAYER, categoryName: 'Cầu thủ' },
+    { src: s20Img, name: 'Ligt', index: 19, category: FootballCategory.PLAYER, categoryName: 'Cầu thủ' },
+    { src: s21Img, name: 'Martinez', index: 20, category: FootballCategory.PLAYER, categoryName: 'Cầu thủ' },
+    { src: s22Img, name: 'Cavani', index: 21, category: FootballCategory.PLAYER, categoryName: 'Cầu thủ' },
+    { src: s23Img, name: 'Vidic', index: 22, category: FootballCategory.PLAYER, categoryName: 'Cầu thủ' },
   ];
 
   // Tính toán vị trí bắt đầu và kết thúc cho trang hiện tại
