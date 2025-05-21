@@ -43,7 +43,14 @@ import s20Img from '../../../assets/images/football/manchester_united/Ligt.png';
 import s21Img from '../../../assets/images/football/manchester_united/Martinez.png';
 import s22Img from '../../../assets/images/football/manchester_united/Cavani.png';
 import s23Img from '../../../assets/images/football/manchester_united/Vidic.png';
-
+import s24Img from '../../../assets/images/football/manchester_united/Ibrahimovic.png';
+import s25Img from '../../../assets/images/football/manchester_united/Saha.png';
+import s26Img from '../../../assets/images/football/manchester_united/Silvestre.png';
+import s27Img from '../../../assets/images/football/manchester_united/Depay.png';
+import s28Img from '../../../assets/images/football/manchester_united/Nani.png';
+import s29Img from '../../../assets/images/football/manchester_united/Erva.png';
+import s30Img from '../../../assets/images/football/manchester_united/Sung.png';
+import s31Img from '../../../assets/images/football/manchester_united/Carrick.png';
 
 // Định nghĩa interface cho đối tượng hình ảnh
 interface ImageItem {
@@ -102,6 +109,14 @@ const FootballListing = () => {
     { src: s21Img, name: 'Martinez', index: 20, category: FootballCategory.PLAYER, categoryName: 'Cầu thủ' },
     { src: s22Img, name: 'Cavani', index: 21, category: FootballCategory.PLAYER, categoryName: 'Cầu thủ' },
     { src: s23Img, name: 'Vidic', index: 22, category: FootballCategory.PLAYER, categoryName: 'Cầu thủ' },
+    { src: s24Img, name: 'Ibrahimovic', index: 23, category: FootballCategory.PLAYER, categoryName: 'Cầu thủ' },
+    { src: s25Img, name: 'Saha', index: 24, category: FootballCategory.PLAYER, categoryName: 'Cầu thủ' },
+    { src: s26Img, name: 'Silvestre', index: 25, category: FootballCategory.PLAYER, categoryName: 'Cầu thủ' },
+    { src: s27Img, name: 'Depay', index: 26, category: FootballCategory.PLAYER, categoryName: 'Cầu thủ' },
+    { src: s28Img, name: 'Nani', index: 27, category: FootballCategory.PLAYER, categoryName: 'Cầu thủ' },
+    { src: s29Img, name: 'Erva', index: 28, category: FootballCategory.PLAYER, categoryName: 'Cầu thủ' },
+    { src: s30Img, name: 'Sung', index: 29, category: FootballCategory.PLAYER, categoryName: 'Cầu thủ' },
+    { src: s31Img, name: 'Carrick', index: 29, category: FootballCategory.PLAYER, categoryName: 'Cầu thủ' },
   ];
 
   // Tính toán vị trí bắt đầu và kết thúc cho trang hiện tại
