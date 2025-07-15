@@ -7,6 +7,7 @@ import RTL from './layouts/full/shared/customizer/RTL';
 import ScrollToTop from './components/shared/ScrollToTop';
 import Router from './routes/Router';
 import { AppState } from './store/Store';
+import './assets/css/gridFix.css';
 
 const App: FC = () => {
   const routing = useRoutes(Router);

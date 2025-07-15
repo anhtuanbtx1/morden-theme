@@ -7,21 +7,21 @@ import BlankCard from 'src/components/shared/BlankCard';
 const BCrumb = [
   {
     to: '/',
-    title: 'Home',
+    title: 'Trang chủ',
   },
   {
-    title: 'Shop',
+    title: 'Cửa hàng',
   },
 ];
 
 const EcomProductList = () => {
   return (
-    <PageContainer title="Shop List" description="this is Shop List page">
+    <PageContainer title="Danh sách sản phẩm" description="Trang danh sách sản phẩm">
       {/* breadcrumb */}
-      <Breadcrumb title="Ecom-Shop" items={BCrumb} />
+      <Breadcrumb title="Danh sách sản phẩm" items={BCrumb} />
       <BlankCard>
         {/* ------------------------------------------- */}
-        {/* Left part */}
+        {/* Phần chính */}
         {/* ------------------------------------------- */}
         <ProductTableList />
       </BlankCard>

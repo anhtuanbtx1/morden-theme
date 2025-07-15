@@ -170,7 +170,19 @@ const FootballListing = () => {
   }, [dispatch]);
 
   return (
-    <Grid container spacing={3}>
+    <Grid
+      container
+      spacing={3}
+      className="football-grid"
+      sx={{
+        '& .MuiGrid-item': {
+          borderBottom: 'none !important'
+        },
+        '& .MuiTableRow-root': {
+          borderBottom: 'none !important'
+        }
+      }}
+    >
 
       {/* Thanh lọc category */}
       <Grid item xs={12} mb={3}>
@@ -240,7 +252,20 @@ const FootballListing = () => {
       {/* Hiển thị hình ảnh */}
       {currentImages.length > 0 ? (
         currentImages.map((image) => (
-          <Grid item xs={12} lg={4} md={4} sm={6} key={image.name} sx={{ display: 'flex' }}>
+          <Grid
+            item
+            xs={12}
+            lg={4}
+            md={4}
+            sm={6}
+            key={image.name}
+            sx={{
+              display: 'flex',
+              '& .MuiGrid-item': {
+                borderBottom: 'none !important'
+              }
+            }}
+          >
             <FullImageFootballCard image={image} />
           </Grid>
         ))

@@ -1,0 +1,40 @@
+/* Fix for Grid layout border issues */
+
+/* Ensure Grid items don't inherit Table row styling */
+.MuiGrid-container .MuiGrid-item {
+  border-bottom: none !important;
+  border: none !important;
+}
+
+/* Prevent Table row styling from affecting Grid */
+.MuiGrid-root {
+  border-bottom: none !important;
+  border: none !important;
+}
+
+/* Specific override for last child in Grid */
+.MuiGrid-container .MuiGrid-item:last-child {
+  border-bottom: none !important;
+  border: none !important;
+}
+
+/* Ensure no table styling affects Grid components */
+.MuiGrid-container .MuiGrid-item:last-child td,
+.MuiGrid-container .MuiGrid-item:last-child th {
+  border-bottom: none !important;
+}
+
+/* Override any inherited table styling */
+.MuiGrid-container * {
+  border-bottom: none !important;
+}
+
+/* Specific fix for Football listing grid */
+.football-grid .MuiGrid-item {
+  border: none !important;
+  border-bottom: none !important;
+}
+
+.football-grid .MuiGrid-item:last-child {
+  border-bottom: none !important;
+}

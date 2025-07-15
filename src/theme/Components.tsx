@@ -292,17 +292,9 @@ const components: any = (theme: Theme) => {
     MuiTableRow: {
       styleOverrides: {
         root: {
-          '&:last-child td': {
+          '&:last-child td, &:last-child th': {
             borderBottom: 0,
           },
-        },
-      },
-    },
-    MuiGridItem: {
-      styleOverrides: {
-        root: {
-          paddingTop: '30px',
-          paddingLeft: '30px !important',
         },
       },
     },

@@ -18,7 +18,8 @@ import {
   IconShoppingCart,
   IconMessage2,
   IconList,
-  IconPhoto
+  IconPhoto,
+  IconPackage
 } from '@tabler/icons';
 
 const Menuitems: MenuitemsType[] = [
@@ -31,6 +32,12 @@ const Menuitems: MenuitemsType[] = [
     title: 'eCommerce',
     icon: IconShoppingCart,
     href: '/dashboards/ecommerce',
+  },
+  {
+    id: uniqueId(),
+    title: 'Danh sách sản phẩm',
+    icon: IconPackage,
+    href: '/apps/ecommerce/eco-product-list',
   },
   {
     navlabel: true,
