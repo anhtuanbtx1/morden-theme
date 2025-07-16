@@ -4,7 +4,8 @@ import {
   IconMessage2,
   IconList,
   IconPhoto,
-  IconPackage
+  IconPackage,
+  IconCategory
 } from '@tabler/icons';
 import { uniqueId } from 'lodash';
 
@@ -36,6 +37,12 @@ const Menuitems = [
     title: 'Danh sách sản phẩm',
     icon: IconPackage,
     href: '/apps/ecommerce/eco-product-list',
+  },
+  {
+    id: uniqueId(),
+    title: 'Quản lý danh mục',
+    icon: IconCategory,
+    href: '/apps/category/management',
   },
   {
     id: uniqueId(),

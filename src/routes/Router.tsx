@@ -58,6 +58,9 @@ const AccountSetting = Loadable(
   lazy(() => import('../views/pages/account-setting/AccountSetting')),
 );
 
+// Category Management
+const CategoryManagement = Loadable(lazy(() => import('../views/apps/category/CategoryManagement')));
+
 // charts
 const AreaChart = Loadable(lazy(() => import('../views/charts/AreaChart')));
 const CandlestickChart = Loadable(lazy(() => import('../views/charts/CandlestickChart')));
@@ -121,6 +124,7 @@ const Router = [
       { path: '/apps/ecommerce/eco-product-list', element: <EcomProductList /> },
       { path: '/apps/ecommerce/eco-checkout', element: <EcomProductCheckout /> },
       { path: '/apps/ecommerce/detail/:id', element: <EcommerceDetail /> },
+      { path: '/apps/category/management', element: <CategoryManagement /> },
       { path: '/apps/followers', element: <Followers /> },
       { path: '/apps/friends', element: <Friends /> },
       { path: '/apps/gallery', element: <Gallery /> },

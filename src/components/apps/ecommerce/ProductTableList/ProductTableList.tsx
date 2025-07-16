@@ -40,7 +40,7 @@ import { format } from 'date-fns';
 import { useDispatch } from 'src/store/Store';
 import { fetchProducts } from 'src/store/apps/eCommerce/ECommerceSlice';
 import ProductService from 'src/services/ProductService';
-import { IconFilter, IconSearch, IconTrash, IconEdit, IconPlus, IconRefresh } from '@tabler/icons';
+import { IconFilter, IconSearch, IconTrash, IconEdit, IconPlus, IconRefresh, IconUpload, IconX } from '@tabler/icons';
 import CustomSwitch from 'src/components/forms/theme-elements/CustomSwitch';
 import { ProductType } from 'src/types/apps/eCommerce';
 
@@ -391,6 +391,8 @@ const ProductTableList = () => {
     stock: true,
     photo: ''
   });
+  const [selectedFile, setSelectedFile] = React.useState<File | null>(null);
+  const [previewUrl, setPreviewUrl] = React.useState<string>('');
   const [editProduct, setEditProduct] = React.useState({
     title: '',
     price: '',
@@ -399,8 +401,13 @@ const ProductTableList = () => {
     stock: true,
     photo: ''
   });
+  const [editSelectedFile, setEditSelectedFile] = React.useState<File | null>(null);
+  const [editPreviewUrl, setEditPreviewUrl] = React.useState<string>('');
   const [formErrors, setFormErrors] = React.useState<any>({});
   const [editFormErrors, setEditFormErrors] = React.useState<any>({});
+  const [imageDialogOpen, setImageDialogOpen] = React.useState(false);
+  const [selectedImage, setSelectedImage] = React.useState<string>('');
+  const [selectedImageTitle, setSelectedImageTitle] = React.useState<string>('');
 
   // Load products from service
   const loadProducts = () => {
@@ -479,6 +486,90 @@ const ProductTableList = () => {
     }
   };
 
+  // Handle file upload
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      // Validate file type
+      const validTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'];
+      if (!validTypes.includes(file.type)) {
+        setSnackbarMessage('Vui lòng chọn file hình ảnh hợp lệ (JPG, PNG, GIF, WebP)');
+        setSnackbarOpen(true);
+
+        return;
+      }
+
+      // Validate file size (max 5MB)
+      const maxSize = 5 * 1024 * 1024; // 5MB
+      if (file.size > maxSize) {
+        setSnackbarMessage('Kích thước file không được vượt quá 5MB');
+        setSnackbarOpen(true);
+
+        return;
+      }
+
+      setSelectedFile(file);
+
+      // Create preview URL
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const result = e.target?.result as string;
+        setPreviewUrl(result);
+        setNewProduct({ ...newProduct, photo: result });
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  // Clear file selection
+  const handleClearFile = () => {
+    setSelectedFile(null);
+    setPreviewUrl('');
+    setNewProduct({ ...newProduct, photo: '' });
+  };
+
+  // Handle file upload for edit form
+  const handleEditFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      // Validate file type
+      const validTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'];
+      if (!validTypes.includes(file.type)) {
+        setSnackbarMessage('Vui lòng chọn file hình ảnh hợp lệ (JPG, PNG, GIF, WebP)');
+        setSnackbarOpen(true);
+
+        return;
+      }
+
+      // Validate file size (max 5MB)
+      const maxSize = 5 * 1024 * 1024; // 5MB
+      if (file.size > maxSize) {
+        setSnackbarMessage('Kích thước file không được vượt quá 5MB');
+        setSnackbarOpen(true);
+
+        return;
+      }
+
+      setEditSelectedFile(file);
+
+      // Create preview URL
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const result = e.target?.result as string;
+        setEditPreviewUrl(result);
+        setEditProduct({ ...editProduct, photo: result });
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  // Clear edit file selection
+  const handleClearEditFile = () => {
+    setEditSelectedFile(null);
+    setEditPreviewUrl('');
+    setEditProduct({ ...editProduct, photo: productToEdit?.photo || '' });
+  };
+
   return (
     <Box>
       <Box>
@@ -518,7 +609,22 @@ const ProductTableList = () => {
                             <Avatar
                               src={row.photo}
                               alt={row.photo}
-                              sx={{ width: 56, height: 56, borderRadius: '10px' }}
+                              sx={{
+                                width: 56,
+                                height: 56,
+                                borderRadius: '10px',
+                                cursor: 'pointer',
+                                transition: 'transform 0.2s ease-in-out',
+                                '&:hover': {
+                                  transform: 'scale(1.05)',
+                                  boxShadow: '0 4px 8px rgba(0,0,0,0.2)'
+                                }
+                              }}
+                              onClick={() => {
+                                setSelectedImage(row.photo);
+                                setSelectedImageTitle(row.title);
+                                setImageDialogOpen(true);
+                              }}
                             />
                             <Box sx={{ ml: 2 }}>
                               <Typography variant="h6" fontWeight="600">
@@ -566,6 +672,8 @@ const ProductTableList = () => {
                                     photo: row.photo || ''
                                   });
                                   setEditFormErrors({});
+                                  setEditPreviewUrl(row.photo || '');
+                                  setEditSelectedFile(null);
                                   setEditDialogOpen(true);
                                 }}
                                 sx={{
@@ -681,13 +789,87 @@ const ProductTableList = () => {
               />
             </Grid>
             <Grid item xs={12}>
-              <TextField
-                fullWidth
-                label="URL hình ảnh"
-                value={newProduct.photo}
-                onChange={(e) => setNewProduct({ ...newProduct, photo: e.target.value })}
-                placeholder="https://example.com/image.jpg"
-              />
+              <Box sx={{ mb: 2 }}>
+                <Typography variant="subtitle2" sx={{ mb: 1 }}>
+                  Hình ảnh sản phẩm
+                </Typography>
+
+                {/* File Upload Button */}
+                <Box sx={{ display: 'flex', gap: 2, alignItems: 'center', mb: 2 }}>
+                  <Button
+                    variant="outlined"
+                    component="label"
+                    startIcon={<IconUpload size="1.1rem" />}
+                    sx={{
+                      borderRadius: 2,
+                      textTransform: 'none',
+                      fontWeight: 600
+                    }}
+                  >
+                    Chọn hình ảnh
+                    <input
+                      type="file"
+                      hidden
+                      accept="image/*"
+                      onChange={handleFileChange}
+                    />
+                  </Button>
+
+                  {selectedFile && (
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                      <Typography variant="body2" color="text.secondary">
+                        {selectedFile.name}
+                      </Typography>
+                      <IconButton
+                        size="small"
+                        onClick={handleClearFile}
+                        color="error"
+                      >
+                        <IconX size="1rem" />
+                      </IconButton>
+                    </Box>
+                  )}
+                </Box>
+
+                {/* Preview Image */}
+                {previewUrl && (
+                  <Box sx={{ mb: 2 }}>
+                    <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
+                      Xem trước:
+                    </Typography>
+                    <Box
+                      component="img"
+                      src={previewUrl}
+                      alt="Preview"
+                      sx={{
+                        width: 120,
+                        height: 120,
+                        objectFit: 'cover',
+                        borderRadius: 2,
+                        border: '1px solid',
+                        borderColor: 'divider'
+                      }}
+                    />
+                  </Box>
+                )}
+
+                {/* URL Input as alternative */}
+                <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
+                  Hoặc nhập URL hình ảnh:
+                </Typography>
+                <TextField
+                  fullWidth
+                  label="URL hình ảnh"
+                  value={newProduct.photo}
+                  onChange={(e) => {
+                    setNewProduct({ ...newProduct, photo: e.target.value });
+                    setPreviewUrl(e.target.value);
+                    setSelectedFile(null);
+                  }}
+                  placeholder="https://example.com/image.jpg"
+                  size="small"
+                />
+              </Box>
             </Grid>
             <Grid item xs={12}>
               <FormControlLabel
@@ -714,6 +896,8 @@ const ProductTableList = () => {
               photo: ''
             });
             setFormErrors({});
+            setSelectedFile(null);
+            setPreviewUrl('');
           }}>
             Hủy
           </Button>
@@ -724,7 +908,6 @@ const ProductTableList = () => {
               if (!newProduct.title.trim()) errors.title = 'Tên sản phẩm là bắt buộc';
               if (!newProduct.price || parseFloat(newProduct.price) <= 0) errors.price = 'Giá phải lớn hơn 0';
               if (!newProduct.category) errors.category = 'Danh mục là bắt buộc';
-              if (!newProduct.description.trim()) errors.description = 'Mô tả là bắt buộc';
 
               if (Object.keys(errors).length > 0) {
                 setFormErrors(errors);
@@ -764,6 +947,8 @@ const ProductTableList = () => {
                   photo: ''
                 });
                 setFormErrors({});
+                setSelectedFile(null);
+                setPreviewUrl('');
               } catch (error) {
                 console.error('Lỗi khi thêm sản phẩm:', error);
                 setSnackbarMessage('Có lỗi xảy ra khi thêm sản phẩm!');
@@ -836,13 +1021,87 @@ const ProductTableList = () => {
               />
             </Grid>
             <Grid item xs={12}>
-              <TextField
-                fullWidth
-                label="URL hình ảnh"
-                value={editProduct.photo}
-                onChange={(e) => setEditProduct({ ...editProduct, photo: e.target.value })}
-                placeholder="https://example.com/image.jpg"
-              />
+              <Box sx={{ mb: 2 }}>
+                <Typography variant="subtitle2" sx={{ mb: 1 }}>
+                  Hình ảnh sản phẩm
+                </Typography>
+
+                {/* File Upload Button */}
+                <Box sx={{ display: 'flex', gap: 2, alignItems: 'center', mb: 2 }}>
+                  <Button
+                    variant="outlined"
+                    component="label"
+                    startIcon={<IconUpload size="1.1rem" />}
+                    sx={{
+                      borderRadius: 2,
+                      textTransform: 'none',
+                      fontWeight: 600
+                    }}
+                  >
+                    Chọn hình ảnh mới
+                    <input
+                      type="file"
+                      hidden
+                      accept="image/*"
+                      onChange={handleEditFileChange}
+                    />
+                  </Button>
+
+                  {editSelectedFile && (
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                      <Typography variant="body2" color="text.secondary">
+                        {editSelectedFile.name}
+                      </Typography>
+                      <IconButton
+                        size="small"
+                        onClick={handleClearEditFile}
+                        color="error"
+                      >
+                        <IconX size="1rem" />
+                      </IconButton>
+                    </Box>
+                  )}
+                </Box>
+
+                {/* Preview Image */}
+                {editPreviewUrl && (
+                  <Box sx={{ mb: 2 }}>
+                    <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
+                      Xem trước:
+                    </Typography>
+                    <Box
+                      component="img"
+                      src={editPreviewUrl}
+                      alt="Preview"
+                      sx={{
+                        width: 120,
+                        height: 120,
+                        objectFit: 'cover',
+                        borderRadius: 2,
+                        border: '1px solid',
+                        borderColor: 'divider'
+                      }}
+                    />
+                  </Box>
+                )}
+
+                {/* URL Input as alternative */}
+                <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
+                  Hoặc nhập URL hình ảnh:
+                </Typography>
+                <TextField
+                  fullWidth
+                  label="URL hình ảnh"
+                  value={editProduct.photo}
+                  onChange={(e) => {
+                    setEditProduct({ ...editProduct, photo: e.target.value });
+                    setEditPreviewUrl(e.target.value);
+                    setEditSelectedFile(null);
+                  }}
+                  placeholder="https://example.com/image.jpg"
+                  size="small"
+                />
+              </Box>
             </Grid>
             <Grid item xs={12}>
               <FormControlLabel
@@ -861,6 +1120,8 @@ const ProductTableList = () => {
           <Button onClick={() => {
             setEditDialogOpen(false);
             setEditFormErrors({});
+            setEditSelectedFile(null);
+            setEditPreviewUrl('');
           }}>
             Hủy
           </Button>
@@ -871,7 +1132,6 @@ const ProductTableList = () => {
               if (!editProduct.title.trim()) errors.title = 'Tên sản phẩm là bắt buộc';
               if (!editProduct.price || parseFloat(editProduct.price) <= 0) errors.price = 'Giá phải lớn hơn 0';
               if (!editProduct.category) errors.category = 'Danh mục là bắt buộc';
-              if (!editProduct.description.trim()) errors.description = 'Mô tả là bắt buộc';
 
               if (Object.keys(errors).length > 0) {
                 setEditFormErrors(errors);
@@ -935,6 +1195,122 @@ const ProductTableList = () => {
             variant="contained"
           >
             Xóa
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+      {/* Image Preview Dialog */}
+      <Dialog
+        open={imageDialogOpen}
+        onClose={() => setImageDialogOpen(false)}
+        maxWidth={false}
+        PaperProps={{
+          sx: {
+            backgroundColor: 'background.paper',
+            borderRadius: 3,
+            boxShadow: '0 24px 48px rgba(0,0,0,0.15)',
+            overflow: 'hidden',
+            maxHeight: '90vh',
+            maxWidth: '500px',
+            width: '100%'
+          }
+        }}
+        BackdropProps={{
+          sx: {
+            backgroundColor: 'rgba(0, 0, 0, 0.7)',
+            backdropFilter: 'blur(8px)'
+          }
+        }}
+      >
+        <DialogTitle
+          sx={{
+            textAlign: 'center',
+            pb: 1,
+            pt: 2,
+            fontSize: '1.25rem',
+            fontWeight: 600,
+            color: 'text.primary',
+            borderBottom: '1px solid',
+            borderColor: 'divider'
+          }}
+        >
+          {selectedImageTitle}
+        </DialogTitle>
+        <DialogContent
+          sx={{
+            p: 3,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            minHeight: '400px',
+            maxHeight: '70vh',
+            overflow: 'hidden'
+          }}
+        >
+          <Box
+            sx={{
+              width: '100%',
+              height: '100%',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              position: 'relative'
+            }}
+          >
+            <Box
+              component="img"
+              src={selectedImage}
+              alt={selectedImageTitle}
+              sx={{
+                maxWidth: '450px',
+                maxHeight: '450px',
+                width: 'auto',
+                height: 'auto',
+                objectFit: 'contain',
+                borderRadius: 1,
+                boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+                transition: 'all 0.3s ease-in-out',
+                cursor: 'zoom-in',
+                '&:hover': {
+                  transform: 'scale(1.03)',
+                  boxShadow: '0 8px 24px rgba(0,0,0,0.2)'
+                }
+              }}
+              onClick={(e: React.MouseEvent) => {
+                e.stopPropagation();
+
+                // Optional: Add zoom functionality here
+              }}
+            />
+          </Box>
+        </DialogContent>
+        <DialogActions
+          sx={{
+            justifyContent: 'center',
+            p: 2,
+            borderTop: '1px solid',
+            borderColor: 'divider',
+            backgroundColor: 'background.default'
+          }}
+        >
+          <Button
+            onClick={() => setImageDialogOpen(false)}
+            variant="contained"
+            color="primary"
+            sx={{
+              borderRadius: 2,
+              textTransform: 'none',
+              fontWeight: 600,
+              px: 3,
+              py: 1,
+              boxShadow: '0 4px 12px rgba(25, 118, 210, 0.3)',
+              '&:hover': {
+                boxShadow: '0 6px 16px rgba(25, 118, 210, 0.4)',
+                transform: 'translateY(-1px)'
+              }
+            }}
+          >
+            Đóng
           </Button>
         </DialogActions>
       </Dialog>
