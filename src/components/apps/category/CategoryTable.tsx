@@ -22,16 +22,8 @@ import {
   DialogTitle,
   Snackbar,
   Alert,
-  Toolbar,
-  TextField,
-  InputAdornment,
-  Paper,
-  MenuItem,
-  Select,
-  FormControl,
-  InputLabel
+  Paper
 } from '@mui/material';
-import { alpha } from '@mui/material/styles';
 import { format } from 'date-fns';
 import { useSelector, useDispatch } from 'src/store/Store';
 import {
@@ -43,116 +35,16 @@ import {
 } from 'src/store/apps/category/CategorySlice';
 import {
   IconEdit,
-  IconTrash,
-  IconPlus,
-  IconSearch,
-  IconRefresh
+  IconTrash
 } from '@tabler/icons';
 import { CategoryType } from 'src/types/apps/category';
 import { getCategoryColorScheme } from 'src/types/apps/category';
 import BlankCard from '../../shared/BlankCard';
+import EnhancedTableToolbar from '../../shared/EnhancedTableToolbar';
 import { AppState } from 'src/store/Store';
 import CategoryDialog from './CategoryDialog';
 
-interface EnhancedTableToolbarProps {
-  search: string;
-  handleSearch: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  onAddClick: () => void;
-  statusFilter: string;
-  onStatusChange: (status: string) => void;
-  onResetData: () => void;
-}
 
-const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
-  const { search, handleSearch, onAddClick, statusFilter, onStatusChange, onResetData } = props;
-
-  return (
-    <Toolbar
-      sx={{
-        pl: { sm: 2 },
-        pr: { xs: 1, sm: 1 },
-        bgcolor: (theme) => alpha(theme.palette.primary.main, 0.05),
-      }}
-    >
-      <Typography
-        sx={{ flex: '1 1 100%' }}
-        variant="h6"
-        id="tableTitle"
-        component="div"
-      >
-        Danh sách danh mục
-      </Typography>
-
-      {/* Search Field */}
-      <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
-        <TextField
-          size="small"
-          placeholder="Tìm kiếm danh mục..."
-          value={search}
-          onChange={handleSearch}
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <IconSearch size="1rem" />
-              </InputAdornment>
-            ),
-          }}
-          sx={{ minWidth: 250 }}
-        />
-
-        {/* Status Filter */}
-        <FormControl size="small" sx={{ minWidth: 120 }}>
-          <InputLabel>Trạng thái</InputLabel>
-          <Select
-            value={statusFilter}
-            label="Trạng thái"
-            onChange={(e) => onStatusChange(e.target.value)}
-          >
-            <MenuItem value="all">Tất cả</MenuItem>
-            <MenuItem value="active">Hoạt động</MenuItem>
-            <MenuItem value="inactive">Không hoạt động</MenuItem>
-          </Select>
-        </FormControl>
-
-        {/* Action Buttons */}
-        <Button
-          variant="contained"
-          color="primary"
-          startIcon={<IconPlus size="1rem" />}
-          onClick={onAddClick}
-          size="small"
-          sx={{
-            ml: 1,
-            minWidth: 100,
-            height: 32,
-            fontSize: '0.875rem',
-            fontWeight: 500,
-            textTransform: 'none',
-            borderRadius: 1,
-            px: 2
-          }}
-        >
-          Thêm mới
-        </Button>
-
-        <Tooltip title="Reset về dữ liệu ban đầu">
-          <IconButton
-            onClick={onResetData}
-            color="warning"
-            size="small"
-            sx={{
-              width: 32,
-              height: 32,
-              ml: 0.5
-            }}
-          >
-            <IconRefresh size="1rem" />
-          </IconButton>
-        </Tooltip>
-      </Box>
-    </Toolbar>
-  );
-};
 
 const CategoryTable = () => {
   const dispatch = useDispatch();
@@ -273,11 +165,25 @@ const CategoryTable = () => {
     <BlankCard>
       {/* Toolbar */}
       <EnhancedTableToolbar
+        title="Danh sách danh mục"
         search={search}
-        handleSearch={handleSearch}
+        onSearchChange={handleSearch}
+        searchPlaceholder="Tìm kiếm danh mục..."
         onAddClick={handleAddClick}
-        statusFilter={statusFilter}
-        onStatusChange={handleStatusChange}
+        addButtonText="Thêm mới"
+        filters={[
+          {
+            label: "Trạng thái",
+            value: statusFilter,
+            options: [
+              { value: "all", label: "Tất cả" },
+              { value: "active", label: "Hoạt động" },
+              { value: "inactive", label: "Không hoạt động" }
+            ],
+            onChange: handleStatusChange,
+            minWidth: 120
+          }
+        ]}
         onResetData={handleResetData}
       />
 

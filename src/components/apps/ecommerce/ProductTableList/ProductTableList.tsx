@@ -9,14 +9,12 @@ import {
   TablePagination,
   TableRow,
   TableSortLabel,
-  Toolbar,
   IconButton,
   Tooltip,
   FormControlLabel,
   Typography,
   Avatar,
   TextField,
-  InputAdornment,
   Paper,
   Dialog,
   DialogTitle,
@@ -26,7 +24,6 @@ import {
   DialogContentText,
   Snackbar,
   Alert,
-  Grid,
   MenuItem,
   Select,
   FormControl,
@@ -34,14 +31,14 @@ import {
   FormHelperText,
   Chip,
 } from '@mui/material';
-import { alpha } from '@mui/material/styles';
 import { visuallyHidden } from '@mui/utils';
 import { format } from 'date-fns';
 import { useDispatch } from 'src/store/Store';
 import { fetchProducts } from 'src/store/apps/eCommerce/ECommerceSlice';
 import ProductService from 'src/services/ProductService';
-import { IconFilter, IconSearch, IconTrash, IconEdit, IconPlus, IconRefresh, IconUpload, IconX } from '@tabler/icons';
+import { IconTrash, IconEdit, IconUpload, IconX } from '@tabler/icons';
 import CustomSwitch from 'src/components/forms/theme-elements/CustomSwitch';
+import EnhancedTableToolbar from 'src/components/shared/EnhancedTableToolbar';
 import { ProductType } from 'src/types/apps/eCommerce';
 
 function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
@@ -161,207 +158,7 @@ function EnhancedTableHead(props: EnhancedTableProps) {
   );
 }
 
-interface EnhancedTableToolbarProps {
-  numSelected: number;
-  handleSearch: React.ChangeEvent<HTMLInputElement> | any;
-  search: string;
-  onAddClick: () => void;
-  categoryFilter: string[];
-  onCategoryChange: (categories: string[]) => void;
-  statusFilter: string;
-  onStatusChange: (status: string) => void;
-  onResetData: () => void;
-}
 
-const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
-  const { numSelected, handleSearch, search, onAddClick, categoryFilter, onCategoryChange, statusFilter, onStatusChange, onResetData } = props;
-
-  return (
-    <Toolbar
-      sx={{
-        pl: { sm: 2 },
-        pr: { xs: 1, sm: 1 },
-        ...(numSelected > 0 && {
-          bgcolor: (theme) =>
-            alpha(theme.palette.primary.main, theme.palette.action.activatedOpacity),
-        }),
-      }}
-    >
-      {numSelected > 0 ? (
-        <Typography sx={{ flex: '1 1 100%' }} color="inherit" variant="subtitle2" component="div">
-          {numSelected} đã chọn
-        </Typography>
-      ) : (
-        <Box sx={{ flex: '1 1 100%', display: 'flex', alignItems: 'center', gap: 2 }}>
-          <TextField
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <IconSearch size="1.1rem" />
-                </InputAdornment>
-              ),
-            }}
-            placeholder="Tìm kiếm sản phẩm"
-            size="small"
-            onChange={handleSearch}
-            value={search}
-            sx={{ minWidth: 180 }}
-          />
-          <FormControl size="small" sx={{ minWidth: 200 }}>
-            <InputLabel>Danh mục</InputLabel>
-            <Select
-              multiple
-              value={categoryFilter}
-              label="Danh mục"
-              onChange={(e) => onCategoryChange(e.target.value as string[])}
-              renderValue={(selected) => {
-                const categoryNames: { [key: string]: string } = {
-                  'Electronics': 'Điện tử',
-                  'Clothing': 'Thời trang',
-                  'Books': 'Sách',
-                  'Home': 'Gia dụng',
-                  'Sports': 'Thể thao'
-                };
-
-                if (selected.length === 0) {
-                  return '';
-                } else if (selected.length === 1) {
-                  return categoryNames[selected[0]] || selected[0];
-                } else if (selected.length === 2) {
-                  return (
-                    <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-                      {selected.map((value) => (
-                        <Chip 
-                          key={value} 
-                          label={categoryNames[value] || value} 
-                          size="small"
-                          sx={{
-                            height: 20,
-                            fontSize: '0.75rem',
-                            backgroundColor: 'rgba(25, 118, 210, 0.08)',
-                            color: 'primary.main'
-                          }}
-                        />
-                      ))}
-                    </Box>
-                  );
-                } else {
-                  return (
-                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
-                      <Chip 
-                        label={categoryNames[selected[0]] || selected[0]} 
-                        size="small"
-                        sx={{
-                          height: 20,
-                          fontSize: '0.75rem',
-                          backgroundColor: 'rgba(25, 118, 210, 0.08)',
-                          color: 'primary.main'
-                        }}
-                      />
-                      <Chip 
-                        label={`+${selected.length - 1} khác`}
-                        size="small"
-                        sx={{
-                          height: 20,
-                          fontSize: '0.75rem',
-                          backgroundColor: 'rgba(158, 158, 158, 0.08)',
-                          color: 'text.secondary'
-                        }}
-                      />
-                    </Box>
-                  );
-                }
-              }}
-              sx={{
-                borderRadius: 2,
-                '& .MuiOutlinedInput-notchedOutline': {
-                  borderColor: 'rgba(0,0,0,0.1)'
-                },
-                '&:hover .MuiOutlinedInput-notchedOutline': {
-                  borderColor: 'primary.main'
-                },
-                '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                  borderColor: 'primary.main',
-                  borderWidth: 2
-                }
-              }}
-            >
-              <MenuItem value="Electronics">Điện tử</MenuItem>
-              <MenuItem value="Clothing">Thời trang</MenuItem>
-              <MenuItem value="Books">Sách</MenuItem>
-              <MenuItem value="Home">Gia dụng</MenuItem>
-              <MenuItem value="Sports">Thể thao</MenuItem>
-            </Select>
-          </FormControl>
-          <FormControl size="small" sx={{ minWidth: 160 }}>
-            <InputLabel>Trạng thái</InputLabel>
-            <Select
-              value={statusFilter}
-              label="Trạng thái"
-              onChange={(e) => onStatusChange(e.target.value)}
-              sx={{
-                borderRadius: 2,
-                '& .MuiOutlinedInput-notchedOutline': {
-                  borderColor: 'rgba(0,0,0,0.1)'
-                },
-                '&:hover .MuiOutlinedInput-notchedOutline': {
-                  borderColor: 'primary.main'
-                },
-                '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                  borderColor: 'primary.main',
-                  borderWidth: 2
-                }
-              }}
-            >
-              <MenuItem value="all">Tất cả trạng thái</MenuItem>
-              <MenuItem value="instock">Còn hàng</MenuItem>
-              <MenuItem value="outofstock">Hết hàng</MenuItem>
-            </Select>
-          </FormControl>
-          <Button
-            variant="contained"
-            color="primary"
-            startIcon={<IconPlus size="1.1rem" />}
-            onClick={onAddClick}
-            sx={{
-              borderRadius: 2,
-              textTransform: 'none',
-              fontWeight: 600,
-              boxShadow: '0 4px 8px rgba(25, 118, 210, 0.3)',
-              '&:hover': {
-                boxShadow: '0 6px 12px rgba(25, 118, 210, 0.4)',
-                transform: 'translateY(-2px)'
-              }
-            }}
-          >
-            Thêm sản phẩm mới
-          </Button>
-        </Box>
-      )}
-
-      {numSelected > 0 ? (
-        <Tooltip title="Xóa">
-          <IconButton>
-            <IconTrash width="18" />
-          </IconButton>
-        </Tooltip>
-      ) : (
-        <Box sx={{ display: 'flex', gap: 1 }}>
-          <Tooltip title="Lọc danh sách">
-            <IconButton>
-              <IconFilter size="1.2rem" />
-            </IconButton>
-          </Tooltip>
-          <Tooltip title="Reset về dữ liệu ban đầu">
-            <IconButton onClick={onResetData} color="warning">
-              <IconRefresh size="1.2rem" />
-            </IconButton>
-          </Tooltip>
-        </Box>
-      )}
-    </Toolbar>
-  );
-};
 
 const ProductTableList = () => {
   const [order] = React.useState<Order>('asc');
@@ -574,14 +371,40 @@ const ProductTableList = () => {
     <Box>
       <Box>
         <EnhancedTableToolbar
+          title="Danh sách sản phẩm"
           numSelected={0}
           search={search}
-          handleSearch={(event: any) => handleSearch(event)}
+          onSearchChange={(event: any) => handleSearch(event)}
+          searchPlaceholder="Tìm kiếm sản phẩm"
           onAddClick={() => setAddDialogOpen(true)}
-          categoryFilter={categoryFilter}
-          onCategoryChange={handleCategoryChange}
-          statusFilter={statusFilter}
-          onStatusChange={handleStatusChange}
+          addButtonText="Thêm sản phẩm"
+          filters={[
+            {
+              label: "Danh mục",
+              value: categoryFilter,
+              options: [
+                { value: "Electronics", label: "Điện tử" },
+                { value: "Clothing", label: "Thời trang" },
+                { value: "Books", label: "Sách" },
+                { value: "Home", label: "Gia dụng" },
+                { value: "Sports", label: "Thể thao" }
+              ],
+              onChange: handleCategoryChange,
+              multiple: true,
+              minWidth: 200
+            },
+            {
+              label: "Trạng thái",
+              value: statusFilter,
+              options: [
+                { value: "all", label: "Tất cả" },
+                { value: "instock", label: "Còn hàng" },
+                { value: "outofstock", label: "Hết hàng" }
+              ],
+              onChange: handleStatusChange,
+              minWidth: 160
+            }
+          ]}
           onResetData={handleResetData}
         />
         <Paper variant="outlined" sx={{ mx: 2, mt: 1 }}>
@@ -735,19 +558,18 @@ const ProductTableList = () => {
       <Dialog open={addDialogOpen} onClose={() => setAddDialogOpen(false)} maxWidth="sm" fullWidth>
         <DialogTitle>Thêm sản phẩm mới</DialogTitle>
         <DialogContent>
-          <Grid container spacing={2} sx={{ mt: 1 }}>
-            <Grid item xs={12}>
-              <TextField
-                fullWidth
-                label="Tên sản phẩm"
-                value={newProduct.title}
-                onChange={(e) => setNewProduct({ ...newProduct, title: e.target.value })}
-                error={!!formErrors.title}
-                helperText={formErrors.title}
-                required
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
+          <Box sx={{ mt: 1, display: 'flex', flexDirection: 'column', gap: 2 }}>
+            <TextField
+              fullWidth
+              label="Tên sản phẩm"
+              value={newProduct.title}
+              onChange={(e) => setNewProduct({ ...newProduct, title: e.target.value })}
+              error={!!formErrors.title}
+              helperText={formErrors.title}
+              required
+            />
+
+            <Box sx={{ display: 'flex', gap: 2 }}>
               <TextField
                 fullWidth
                 label="Giá"
@@ -758,8 +580,6 @@ const ProductTableList = () => {
                 helperText={formErrors.price}
                 required
               />
-            </Grid>
-            <Grid item xs={12} sm={6}>
               <FormControl fullWidth error={!!formErrors.category}>
                 <InputLabel>Danh mục</InputLabel>
                 <Select
@@ -775,20 +595,20 @@ const ProductTableList = () => {
                 </Select>
                 {formErrors.category && <FormHelperText>{formErrors.category}</FormHelperText>}
               </FormControl>
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                fullWidth
-                label="Mô tả"
-                multiline
-                rows={3}
-                value={newProduct.description}
-                onChange={(e) => setNewProduct({ ...newProduct, description: e.target.value })}
-                error={!!formErrors.description}
-                helperText={formErrors.description}
-              />
-            </Grid>
-            <Grid item xs={12}>
+            </Box>
+
+            <TextField
+              fullWidth
+              label="Mô tả"
+              multiline
+              rows={3}
+              value={newProduct.description}
+              onChange={(e) => setNewProduct({ ...newProduct, description: e.target.value })}
+              error={!!formErrors.description}
+              helperText={formErrors.description}
+            />
+
+            <Box>
               <Box sx={{ mb: 2 }}>
                 <Typography variant="subtitle2" sx={{ mb: 1 }}>
                   Hình ảnh sản phẩm
@@ -870,19 +690,18 @@ const ProductTableList = () => {
                   size="small"
                 />
               </Box>
-            </Grid>
-            <Grid item xs={12}>
-              <FormControlLabel
-                control={
-                  <CustomSwitch
-                    checked={newProduct.stock}
-                    onChange={(e: any) => setNewProduct({ ...newProduct, stock: e.target.checked })}
-                  />
-                }
-                label="Còn hàng"
-              />
-            </Grid>
-          </Grid>
+            </Box>
+
+            <FormControlLabel
+              control={
+                <CustomSwitch
+                  checked={newProduct.stock}
+                  onChange={(e: any) => setNewProduct({ ...newProduct, stock: e.target.checked })}
+                />
+              }
+              label="Còn hàng"
+            />
+          </Box>
         </DialogContent>
         <DialogActions>
           <Button onClick={() => {
@@ -967,19 +786,18 @@ const ProductTableList = () => {
       <Dialog open={editDialogOpen} onClose={() => setEditDialogOpen(false)} maxWidth="sm" fullWidth>
         <DialogTitle>Chỉnh sửa sản phẩm</DialogTitle>
         <DialogContent>
-          <Grid container spacing={2} sx={{ mt: 1 }}>
-            <Grid item xs={12}>
-              <TextField
-                fullWidth
-                label="Tên sản phẩm"
-                value={editProduct.title}
-                onChange={(e) => setEditProduct({ ...editProduct, title: e.target.value })}
-                error={!!editFormErrors.title}
-                helperText={editFormErrors.title}
-                required
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
+          <Box sx={{ mt: 1, display: 'flex', flexDirection: 'column', gap: 2 }}>
+            <TextField
+              fullWidth
+              label="Tên sản phẩm"
+              value={editProduct.title}
+              onChange={(e) => setEditProduct({ ...editProduct, title: e.target.value })}
+              error={!!editFormErrors.title}
+              helperText={editFormErrors.title}
+              required
+            />
+
+            <Box sx={{ display: 'flex', gap: 2 }}>
               <TextField
                 fullWidth
                 label="Giá"
@@ -990,8 +808,6 @@ const ProductTableList = () => {
                 helperText={editFormErrors.price}
                 required
               />
-            </Grid>
-            <Grid item xs={12} sm={6}>
               <FormControl fullWidth error={!!editFormErrors.category}>
                 <InputLabel>Danh mục</InputLabel>
                 <Select
@@ -1007,20 +823,20 @@ const ProductTableList = () => {
                 </Select>
                 {editFormErrors.category && <FormHelperText>{editFormErrors.category}</FormHelperText>}
               </FormControl>
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                fullWidth
-                label="Mô tả"
-                multiline
-                rows={3}
-                value={editProduct.description}
-                onChange={(e) => setEditProduct({ ...editProduct, description: e.target.value })}
-                error={!!editFormErrors.description}
-                helperText={editFormErrors.description}
-              />
-            </Grid>
-            <Grid item xs={12}>
+            </Box>
+
+            <TextField
+              fullWidth
+              label="Mô tả"
+              multiline
+              rows={3}
+              value={editProduct.description}
+              onChange={(e) => setEditProduct({ ...editProduct, description: e.target.value })}
+              error={!!editFormErrors.description}
+              helperText={editFormErrors.description}
+            />
+
+            <Box>
               <Box sx={{ mb: 2 }}>
                 <Typography variant="subtitle2" sx={{ mb: 1 }}>
                   Hình ảnh sản phẩm
@@ -1102,19 +918,18 @@ const ProductTableList = () => {
                   size="small"
                 />
               </Box>
-            </Grid>
-            <Grid item xs={12}>
-              <FormControlLabel
-                control={
-                  <CustomSwitch
-                    checked={editProduct.stock}
-                    onChange={(e: any) => setEditProduct({ ...editProduct, stock: e.target.checked })}
-                  />
-                }
-                label="Còn hàng"
-              />
-            </Grid>
-          </Grid>
+            </Box>
+
+            <FormControlLabel
+              control={
+                <CustomSwitch
+                  checked={editProduct.stock}
+                  onChange={(e: any) => setEditProduct({ ...editProduct, stock: e.target.checked })}
+                />
+              }
+              label="Còn hàng"
+            />
+          </Box>
         </DialogContent>
         <DialogActions>
           <Button onClick={() => {
