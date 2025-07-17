@@ -38,6 +38,7 @@ const ProductsSold = () => {
 
     // Refresh stats every 5 seconds to catch any updates
     const interval = setInterval(loadProductStats, 5000);
+
     return () => clearInterval(interval);
   }, []);
 
@@ -75,6 +76,7 @@ const ProductsSold = () => {
       },
     },
   };
+
   // Tạo dữ liệu chart dựa trên thống kê thực tế
   const seriescolumnchart = [
     {
