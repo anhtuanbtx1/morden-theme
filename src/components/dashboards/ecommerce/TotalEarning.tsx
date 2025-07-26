@@ -4,12 +4,48 @@ import { useTheme } from '@mui/material/styles';
 import { Box, Typography } from '@mui/material';
 
 import DashboardCard from '../../shared/DashboardCard';
+import ProductService from 'src/services/ProductService';
 import { Props } from 'react-apexcharts';
 
 const TotalEarning = () => {
   // chart color
   const theme = useTheme();
-  const secondary = theme.palette.secondary.main;
+  const errorColor = theme.palette.error.main;
+
+  // State để lưu tổng giá trị sản phẩm hết hàng
+  const [outOfStockValue, setOutOfStockValue] = React.useState(0);
+
+  // Load thống kê giá trị sản phẩm hết hàng
+  React.useEffect(() => {
+    const loadOutOfStockStats = () => {
+      const allProducts = ProductService.getVisibleProducts();
+      const outOfStockProducts = allProducts.filter(product => product.stock === false);
+
+      // Tính tổng giá trị (price * qty) của sản phẩm hết hàng
+      const totalValue = outOfStockProducts.reduce((sum, product) => {
+        return sum + (product.price * product.qty);
+      }, 0);
+
+      setOutOfStockValue(totalValue);
+    };
+
+    loadOutOfStockStats();
+
+    // Refresh stats every 5 seconds to catch any updates
+    const interval = setInterval(loadOutOfStockStats, 5000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  // Format số tiền theo định dạng tiền tệ
+  const formatCurrency = (amount: number) => {
+    return new Intl.NumberFormat('vi-VN', {
+      style: 'currency',
+      currency: 'VND',
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0,
+    }).format(amount);
+  };
 
   // chart
   const optionscolumnchart: Props = {
@@ -27,7 +63,7 @@ const TotalEarning = () => {
         enabled: true,
       },
     },
-    colors: [secondary],
+    colors: [errorColor],
     grid: {
       show: false,
     },
@@ -78,10 +114,22 @@ const TotalEarning = () => {
       },
     },
   };
+
+  // Tạo dữ liệu chart dựa trên giá trị sản phẩm hết hàng
   const seriescolumnchart = [
     {
-      name: '',
-      data: [4, 10, 9, 7, 9, 10, 11, 8, 10],
+      name: 'Giá trị hết hàng',
+      data: [
+        outOfStockValue * 0.7,
+        outOfStockValue * 0.9,
+        outOfStockValue * 0.6,
+        outOfStockValue * 0.8,
+        outOfStockValue * 1.1,
+        outOfStockValue * 0.9,
+        outOfStockValue * 1.2,
+        outOfStockValue * 0.8,
+        outOfStockValue
+      ],
     },
   ];
 
@@ -89,9 +137,11 @@ const TotalEarning = () => {
     <DashboardCard>
       <>
         <Typography variant="subtitle2" color="textSecondary">
-          Total Earning
+          Giá trị hàng hết
         </Typography>
-        <Typography variant="h4">$78,298</Typography>
+        <Typography variant="h4" color="error.main">
+          {formatCurrency(outOfStockValue)}
+        </Typography>
         <Box mt={5}>
           <Chart options={optionscolumnchart} series={seriescolumnchart} type="bar" height="55px" />
         </Box>
