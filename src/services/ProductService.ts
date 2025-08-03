@@ -196,6 +196,8 @@ class ProductService {
       return false;
     }
   }
+
+
 }
 
 export default ProductService;

@@ -110,6 +110,12 @@ const headCells: readonly HeadCell[] = [
     label: 'Giá',
   },
   {
+    id: 'salesPrice',
+    numeric: false,
+    disablePadding: false,
+    label: 'Giá đã bán',
+  },
+  {
     id: 'action',
     numeric: false,
     disablePadding: false,
@@ -186,7 +192,9 @@ const ProductTableList = () => {
     description: '',
     category: '',
     stock: true,
-    photo: ''
+    photo: '',
+    qty: '1',
+    salesPrice: ''
   });
   const [selectedFile, setSelectedFile] = React.useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = React.useState<string>('');
@@ -196,7 +204,9 @@ const ProductTableList = () => {
     description: '',
     category: '',
     stock: true,
-    photo: ''
+    photo: '',
+    qty: '1',
+    salesPrice: ''
   });
   const [editSelectedFile, setEditSelectedFile] = React.useState<File | null>(null);
   const [editPreviewUrl, setEditPreviewUrl] = React.useState<string>('');
@@ -283,8 +293,10 @@ const ProductTableList = () => {
     }
   };
 
-  // Handle file upload
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+
+
+  // Handle image file upload
+  const handleImageFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
       // Validate file type
@@ -377,7 +389,7 @@ const ProductTableList = () => {
           onSearchChange={(event: any) => handleSearch(event)}
           searchPlaceholder="Tìm kiếm sản phẩm"
           onAddClick={() => setAddDialogOpen(true)}
-          addButtonText="Thêm sản phẩm"
+          addButtonText="Thêm"
           filters={[
             {
               label: "Danh mục",
@@ -405,6 +417,7 @@ const ProductTableList = () => {
               minWidth: 160
             }
           ]}
+
           onResetData={handleResetData}
         />
         <Paper variant="outlined" sx={{ mx: 2, mt: 1 }}>
@@ -476,7 +489,12 @@ const ProductTableList = () => {
                           />
                         </TableCell>
                         <TableCell>
-                          <Typography variant="h6">${row.price}</Typography>
+                          <Typography variant="h6">{row.price}</Typography>
+                        </TableCell>
+                        <TableCell>
+                          <Typography variant="h6" color="success.main" fontWeight="600">
+                            {row.salesPrice || row.price}
+                          </Typography>
                         </TableCell>
                         <TableCell>
                           <Box sx={{ display: 'flex', gap: 1 }}>
@@ -492,7 +510,9 @@ const ProductTableList = () => {
                                     description: row.description || '',
                                     category: Array.isArray(row.category) ? row.category[0] : row.category || '',
                                     stock: row.stock,
-                                    photo: row.photo || ''
+                                    photo: row.photo || '',
+                                    qty: (row.qty || 1).toString(),
+                                    salesPrice: (row.salesPrice || row.price).toString()
                                   });
                                   setEditFormErrors({});
                                   setEditPreviewUrl(row.photo || '');
@@ -580,6 +600,30 @@ const ProductTableList = () => {
                 helperText={formErrors.price}
                 required
               />
+              <TextField
+                fullWidth
+                label="Số lượng"
+                type="number"
+                value={newProduct.qty}
+                onChange={(e) => setNewProduct({ ...newProduct, qty: e.target.value })}
+                error={!!formErrors.qty}
+                helperText={formErrors.qty}
+                inputProps={{ min: 1 }}
+                required
+              />
+            </Box>
+
+            <Box sx={{ display: 'flex', gap: 2 }}>
+              <TextField
+                fullWidth
+                label="Giá đã bán"
+                type="number"
+                value={newProduct.salesPrice}
+                onChange={(e) => setNewProduct({ ...newProduct, salesPrice: e.target.value })}
+                error={!!formErrors.salesPrice}
+                helperText={formErrors.salesPrice}
+                placeholder="Để trống sẽ dùng giá gốc"
+              />
               <FormControl fullWidth error={!!formErrors.category}>
                 <InputLabel>Danh mục</InputLabel>
                 <Select
@@ -631,7 +675,7 @@ const ProductTableList = () => {
                       type="file"
                       hidden
                       accept="image/*"
-                      onChange={handleFileChange}
+                      onChange={handleImageFileChange}
                     />
                   </Button>
 
@@ -712,7 +756,9 @@ const ProductTableList = () => {
               description: '',
               category: '',
               stock: true,
-              photo: ''
+              photo: '',
+              qty: '1',
+              salesPrice: ''
             });
             setFormErrors({});
             setSelectedFile(null);
@@ -726,7 +772,9 @@ const ProductTableList = () => {
               const errors: any = {};
               if (!newProduct.title.trim()) errors.title = 'Tên sản phẩm là bắt buộc';
               if (!newProduct.price || parseFloat(newProduct.price) <= 0) errors.price = 'Giá phải lớn hơn 0';
+              if (!newProduct.qty || parseInt(newProduct.qty) <= 0) errors.qty = 'Số lượng phải lớn hơn 0';
               if (!newProduct.category) errors.category = 'Danh mục là bắt buộc';
+              if (newProduct.salesPrice && parseFloat(newProduct.salesPrice) <= 0) errors.salesPrice = 'Giá đã bán phải lớn hơn 0';
 
               if (Object.keys(errors).length > 0) {
                 setFormErrors(errors);
@@ -742,12 +790,12 @@ const ProductTableList = () => {
                   category: [newProduct.category],
                   stock: newProduct.stock,
                   photo: newProduct.photo || '/static/images/products/default-product.jpg',
-                  salesPrice: parseFloat(newProduct.price),
+                  salesPrice: newProduct.salesPrice ? parseFloat(newProduct.salesPrice) : parseFloat(newProduct.price),
                   gender: 'All',
                   rating: 0,
                   discount: 0,
                   related: false,
-                  qty: 1,
+                  qty: parseInt(newProduct.qty),
                   colors: ['#1890FF'],
                   created: new Date()
                 };
@@ -763,7 +811,9 @@ const ProductTableList = () => {
                   description: '',
                   category: '',
                   stock: true,
-                  photo: ''
+                  photo: '',
+                  qty: '1',
+                  salesPrice: ''
                 });
                 setFormErrors({});
                 setSelectedFile(null);
@@ -807,6 +857,30 @@ const ProductTableList = () => {
                 error={!!editFormErrors.price}
                 helperText={editFormErrors.price}
                 required
+              />
+              <TextField
+                fullWidth
+                label="Số lượng"
+                type="number"
+                value={editProduct.qty}
+                onChange={(e) => setEditProduct({ ...editProduct, qty: e.target.value })}
+                error={!!editFormErrors.qty}
+                helperText={editFormErrors.qty}
+                inputProps={{ min: 1 }}
+                required
+              />
+            </Box>
+
+            <Box sx={{ display: 'flex', gap: 2 }}>
+              <TextField
+                fullWidth
+                label="Giá đã bán"
+                type="number"
+                value={editProduct.salesPrice}
+                onChange={(e) => setEditProduct({ ...editProduct, salesPrice: e.target.value })}
+                error={!!editFormErrors.salesPrice}
+                helperText={editFormErrors.salesPrice}
+                placeholder="Để trống sẽ dùng giá gốc"
               />
               <FormControl fullWidth error={!!editFormErrors.category}>
                 <InputLabel>Danh mục</InputLabel>
@@ -946,7 +1020,9 @@ const ProductTableList = () => {
               const errors: any = {};
               if (!editProduct.title.trim()) errors.title = 'Tên sản phẩm là bắt buộc';
               if (!editProduct.price || parseFloat(editProduct.price) <= 0) errors.price = 'Giá phải lớn hơn 0';
+              if (!editProduct.qty || parseInt(editProduct.qty) <= 0) errors.qty = 'Số lượng phải lớn hơn 0';
               if (!editProduct.category) errors.category = 'Danh mục là bắt buộc';
+              if (editProduct.salesPrice && parseFloat(editProduct.salesPrice) <= 0) errors.salesPrice = 'Giá đã bán phải lớn hơn 0';
 
               if (Object.keys(errors).length > 0) {
                 setEditFormErrors(errors);
@@ -963,7 +1039,8 @@ const ProductTableList = () => {
                   category: [editProduct.category],
                   stock: editProduct.stock,
                   photo: editProduct.photo || productToEdit.photo,
-                  salesPrice: parseFloat(editProduct.price)
+                  qty: parseInt(editProduct.qty),
+                  salesPrice: editProduct.salesPrice ? parseFloat(editProduct.salesPrice) : parseFloat(editProduct.price)
                 };
 
                 ProductService.updateProduct(productToEdit.id, updatedProduct);
@@ -1129,6 +1206,8 @@ const ProductTableList = () => {
           </Button>
         </DialogActions>
       </Dialog>
+
+
 
       {/* Success Snackbar */}
       <Snackbar

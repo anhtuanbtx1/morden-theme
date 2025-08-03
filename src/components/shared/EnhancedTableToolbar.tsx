@@ -201,10 +201,14 @@ const EnhancedTableToolbar: React.FC<EnhancedTableToolbarProps> = ({
                   sx={{
                     borderRadius: 2,
                     '& .MuiOutlinedInput-notchedOutline': {
-                      borderColor: 'rgba(0,0,0,0.1)'
+                      borderColor: '#ffffff3b'
                     },
                     '&:hover .MuiOutlinedInput-notchedOutline': {
-                      borderColor: 'rgba(0,0,0,0.2)'
+                      borderColor: '#ffffff'
+                    },
+                    '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                      borderColor: '#ffffff',
+                      borderWidth: '2px'
                     }
                   }}
                 >
